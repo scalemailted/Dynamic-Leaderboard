@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,4 +12,6 @@ def testpage(request):
 	# Return a rendered response to send to the client
 	# We make use of the shortcut function to make our lives easier.
 	# Note that the first parameter is the template we wish to use.
-	return render(request, 'robotics_scoreboard/index.html', context_dict)
+	
+	#return render(request, 'robotics_scoreboard/index.html', context_dict)
+	return JsonResponse(context_dict)
