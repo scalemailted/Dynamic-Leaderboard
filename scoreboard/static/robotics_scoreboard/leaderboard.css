@@ -1,0 +1,214 @@
+@CHARSET "UTF-8";
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  /*margin: 0;*/
+  padding: 0;
+  /*border: 0;*/
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/*
+#fast_rats ul
+{
+float: left;
+margin: 0;
+padding: 0;
+list-style-type: none;
+text-align: center;
+}
+
+#fast_rats ul li { display: inline; }
+
+#fast_rats ul li a
+{
+text-decoration: none;
+padding: .2em 1em;
+color: #fff;
+background-color: #036;
+}
+
+#fast_rats ul li a:hover
+{
+color: #fff;
+background-color: #369;
+}
+
+
+#smart_rats ul
+{
+float: right;
+margin: 0;
+padding: 0;
+list-style-type: none;
+text-align: center;
+}
+
+#smart_rats ul li { display: inline; }
+
+#smart_rats ul li a
+{
+text-decoration: none;
+padding: .2em 1em;
+color: #fff;
+background-color: #900;
+}
+
+#smart_rats ul li a:hover
+{
+color: #fff;
+background-color: #c08;
+}
+
+*/
+
+
+
+.right-title
+{
+    padding-top: 5px;
+    font-weight: bold;
+    /*display: table-cell;*/
+    text-align: center;
+    border-style: solid;
+    border-left-width: 1px; 
+    border-right-width: 1px; 
+    border-top: 0;
+    border-bottom-width: 1px;
+    border-color: #fff;
+    width: 619px;
+
+}
+
+
+.left-title
+{
+    padding-top: 5px;
+    font-weight: bold;
+    /*display: table-cell;*/
+    text-align: center;
+    border-style: solid;
+    border-left-width: 1px; 
+    border-right-width: 1px; 
+    border-top: 0;
+    border-bottom-width: 1px;
+    border-color: #fff;
+    width: 537px;
+
+}
+
+#leftcolumn 
+{
+    /*display: inline-block;*/
+    float: left;
+
+}
+
+#rightcolumn 
+{
+    /*display: inline-block;*/
+    float: right;
+
+}
+
+.table-row 
+{
+    display: table-row;
+}
+
+.cell1, .cell2, .cell3, .cell4, .cell5, .cell6, .cell7 
+{
+    padding-top: 5px;
+    display: table-cell;
+    text-align: center;
+    border-style: solid;
+    border-left-width: 1px; 
+    border-right-width: 1px; 
+    border-top: 0;
+    border-bottom: 0;
+    border-color: #fff;
+    /*width: 50px;*/
+}
+
+
+#total_column
+{
+    /*text-align: right;*/
+    /*padding-right: .75cm;*/    
+}
+
+#left-header
+{
+    line-height: 1.25;
+    color: #fff;
+    background-color: #036; 
+    /*border-style: solid;
+    border-bottom-color: #fff;*/
+}
+
+#right-header
+{
+    line-height: 1.25;
+    color: #fff;
+    background-color: #900; 
+    /*border-style: solid;
+    border-bottom-color: #fff;*/
+}
+
+
+
+span {
+    display: inline-block;
+    min-width: 75px;
+}
+
+
+body {
+  line-height: 1;
+  font-family: Helvetica, arial, sans-serif;
+  /*margin:10pt;*/
+}
+
+
+ol, ul {  
+  list-style: none;
+  /*list-style-position: inside;*/
+}
+
+
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+h1 { font-size: 200% }
