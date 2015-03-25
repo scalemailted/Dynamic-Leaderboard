@@ -87,8 +87,44 @@
             
             function poll()
             {
+
+                $.ajax ({
+                    url: '/robotics_scoreboard/fastRatsData',
+                    dataType: 'json',
+                    success: function(o) {
+                        
+                        var scores = [];
+                        for (i = 0; i < o.length; i++) {scores.push(o[i].total);}
+                        var sorted = scores.slice().sort(function(a,b){return b-a});
+                        var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
+                                 
+                        for(i=0;i<o.length;i++)
+                        {
+                            if ($('#fastRat-'+o[i].id).length == 0)
+                            {
+                                // this id doesn't exist, so add it to our list.
+                                $("#leaderboard").append(
+                                                         '<li class="table-row" id= "fastRat-' + o[i].id + '">'+
+                                                            '<span class="cell1">' + ranks[i] + '</span>'+
+                                                            '<span class="cell2">' + o[i].team + '</span>'+
+                                                            '<span class="cell3">'+ o[i].search + '</span>'+
+                                                            '<span class="cell4">' + o[i].critical+ '</span>'+
+                                                            '<span class="cell5">' + o[i].time + '</span>'+
+                                                            '<span class="cell6">' + o[i].penalty + '</span>'+
+                                                            '<span id="total_column" class="cell7">' + o[i].total + '</span>'+
+                                                         '</li>');
+                            }
+                            else
+                            {
+                                // this id does exist, so update 'score' count in the h1 tag in the list item.
+                                $('#fastRat-'+o[i].id).find("#total_column").html(o[i].total);
+                            }
+                        }
+                        sort();
+                    },
+                });
                 //TEST DATA CODE
-                
+                /*
                 var o = [
 			 {"id": "1", "score": 2000, "username": "A"},
                          {"id": "2", "score": 1900, "username": "BB"},
@@ -120,43 +156,9 @@
                          {"id": "29", "score": 110, "username": "KXXX"},
                          {"id": "36", "score": 1800, "username": "LXXX"}];
                          
-                var scores = [];
-                for (i = 0; i < o.length; i++) {scores.push(o[i].score);}
-                var sorted = scores.slice().sort(function(a,b){return b-a});
-                var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
-                         
-                for(i=0;i<o.length;i++)
-                {
-                    
-                    
-                    if ($('#user-'+o[i].id).length == 0)
-                    {
-                        // this id doesn't exist, so add it to our list.
-                        $("#leaderboard").append(
-                                                 //'<li >' +
-                                                 //   '<span align="center" min-width="10px">' + ranks[i] + '</span>'+
-                                                 //   '<span id="user-' + o[i].id + '">' + o[i].username + '</span>' +
-                                                 //   '<span align="right" id="user-' + o[i].id + '">' +" " + o[i].score+ '</span>'+
-                                                 //'</li>');
-                                                 '<li class="table-row">'+
-                                                    '<span class="cell1">' + ranks[i] + '</span>'+
-                                                    '<span class="cell2">' + o[i].username + '</span>'+
-                                                    '<span class="cell3">0</span>'+
-                                                    '<span class="cell4">0</span>'+
-                                                    '<span class="cell5">0</span>'+
-                                                    '<span class="cell6">0</span>'+
-                                                    '<span id="total_column" class="cell7">' + o[i].score + '</span>'+
-                                                 '</li>');
-                    }
-                    else
-                    {
-                        // this id does exist, so update 'score' count in the h1 tag in the list item.
-                        $('#user-'+o[i].id).html(o[i].username);
-                    }
-                }
-                
-                sort();
+                */
 
+         /*       
 		//Smart Leaderboard
 		var o = [{"id": "1", "score": 1000, "username": "AX"},
                          {"id": "2", "score": 900, "username": "BXXX"},
@@ -168,48 +170,58 @@
                          {"id": "8", "score": 300, "username": "HXXX"},
                          {"id": "9", "score": 200, "username": "KXXX"},
                          {"id": "36", "score": 1800, "username": "LXXX"}];
-                         
-                var scores = [];
-                for (i = 0; i < o.length; i++) {scores.push(o[i].score);}
-                var sorted = scores.slice().sort(function(a,b){return b-a});
-                var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
-                         
-                for(i=0;i<o.length;i++)
-                {
-                    
-                    
-                    if ($('#user-'+o[i].id).length == 0)
-                    {
-                        // this id doesn't exist, so add it to our list.
-                        $("#smart-leaderboard").append(
-                                                 //'<li >' +
-                                                 //   '<span align="center" min-width="10px">' + ranks[i] + '</span>'+
-                                                 //   '<span id="user-' + o[i].id + '">' + o[i].username + '</span>' +
-                                                 //   '<span align="right" id="user-' + o[i].id + '">' +" " + o[i].score+ '</span>'+
-                                                 //'</li>');
-                                                 '<li class="table-row">'+
-                                                    '<span class="cell1">' + ranks[i] + '</span>'+
-                                                    '<span class="cell2">' + o[i].username + '</span>'+
-                                                    '<span class="cell3">0</span>'+
-                                                    '<span class="cell4">0</span>'+
-                                                    '<span class="cell5">0</span>'+
-                                                    '<span class="cell6">0</span>'+
-						    '<span class="cell6">0</span>'+
-                                                    '<span id="total_column" class="cell7">' + o[i].score + '</span>'+
-                                                 '</li>');
-                    }
-                    else
-                    {
-                        // this id does exist, so update 'score' count in the h1 tag in the list item.
-                        $('#user-'+o[i].id).html(o[i].username);
-                    }
-                }
+        */        
+
+        $.ajax ({
+                    url: '/robotics_scoreboard/smartRatsData',
+                    dataType: 'json',
+                    success: function(o) {
+                        var scores = [];
+                        for (i = 0; i < o.length; i++) {scores.push(o[i].total);}
+                        var sorted = scores.slice().sort(function(a,b){return b-a});
+                        var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
+                                 
+                        for(i=0;i<o.length;i++)
+                        {
+                            
+                            
+                            if ($('#user-'+o[i].id).length == 0)
+                            {
+                                // this id doesn't exist, so add it to our list.
+                                $("#smart-leaderboard").append(
+                                                         //'<li >' +
+                                                         //   '<span align="center" min-width="10px">' + ranks[i] + '</span>'+
+                                                         //   '<span id="user-' + o[i].id + '">' + o[i].username + '</span>' +
+                                                         //   '<span align="right" id="user-' + o[i].id + '">' +" " + o[i].score+ '</span>'+
+                                                         //'</li>');
+                                                         '<li class="table-row" id= "user-' + o[i].id +'">'+
+                                                            '<span class="cell1">' + ranks[i] + '</span>'+
+                                                            '<span class="cell2">' + o[i].team + '</span>'+
+                                                            '<span class="cell3">' + o[i].search + '</span>'+
+                                                            '<span class="cell4">' + o[i].critical+ '</span>'+
+                                                            '<span class="cell5">' + o[i].time + '</span>'+
+                                                            '<span class="cell6">' + o[i].easter_egg + '</span>'+
+                                    '<span class="cell6">' + o[i].penalty + '</span>'+
+                                                            '<span id="total_column" class="cell7">' + o[i].total + '</span>'+
+                                                         '</li>');
+                            }
+                            else
+                            {
+                                // this id does exist, so update 'score' count in the h1 tag in the list item.
+                                $('#user-'+o[i].id).find("#total_column").html(o[i].total);
+                                $('#user-'+o[i].id).find(".cell1").html(ranks[i]);
+
+                            }
+                        }
+                        
+                        smart_sort();
+                    },
+                }); 
                 
-                smart_sort();
 
             
                 // play it again, sam
-                //var t=setTimeout("poll()",3000);
+                var t=setTimeout("poll()",2500);
             }
         
         
@@ -228,7 +240,7 @@
                                                       var $El = $(el);
                                                       var iFr = $.data(el,'h');
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 3000, start:function(){if (iFr > iTo) {el.style.color="white"; } if (i%2==1) el.style.backgroundColor='#ddd';}, complete:function(){el.style.color="black"; el.style.fontWeight = 'normal'; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) el.style.backgroundColor='#ddd';}, progress:function(){if (iFr > iTo) {el.style.fontWeight = 'bold'; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, start:function(){if (iFr > iTo) {el.style.color="white"; } if (i%2==1) el.style.backgroundColor='#ddd';}, complete:function(){el.style.color="black"; el.style.fontWeight = 'normal'; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) el.style.backgroundColor='#ddd';}, progress:function(){if (iFr > iTo) {el.style.fontWeight = 'bold'; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
                                                      });
                                                     
         }
