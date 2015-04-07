@@ -143,7 +143,7 @@ background-color: #c08;
     display: table-row;
 }
 
-.cell1, .cell2, .cell3, .cell4, .cell5, .cell6, .cell7 
+.rank, .team, .search_path, .critical_path, .critical_time, .penalty, .total_score, .easter_egg 
 {
     padding-top: 5px;
     display: table-cell;

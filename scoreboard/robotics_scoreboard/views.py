@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from robotics_scoreboard.models import FastRatsTableEntry, SmartRatsTableEntry
+from robotics_scoreboard.models import FastRatsTableEntry
+#, SmartRatsTableEntry
 
 # Create your views here.
 def scoreboard(request):
@@ -23,10 +24,11 @@ def getFastRatsJson(request):
 	fastRats = list(FastRatsTableEntry.objects.all().values())
 	#context_dict = {'fastRats': fastRats }
 	return JsonResponse(data=fastRats, safe=False)
-
+'''
 def getSmartRatsJson(request):
 	#Get all of the records from the database
 	# add cast the collection into a list
 	smartRats = list(SmartRatsTableEntry.objects.all().values())
 	#context_dict = {'fastRats': fastRats }
 	return JsonResponse(data=smartRats, safe=False)
+'''
