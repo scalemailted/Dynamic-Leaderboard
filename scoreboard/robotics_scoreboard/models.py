@@ -29,9 +29,17 @@ class FastRatsTableEntry(models.Model):
 	critical_time = models.CharField(max_length=10, default='0', db_column='Critical Time')
 	easter_egg = models.IntegerField(default=0, db_column='Easter Egg')
 	penalty = models.IntegerField(default=0, db_column='Penalty')
-	round_score = models.IntegerField(default=0, db_column='Round')
-	total_score = models.IntegerField(default=0, db_column='Total')
+	round_score = models.IntegerField(default=0, db_column='Round', editable=False)
+	total_score = models.IntegerField(default=0, db_column='Total', editable=False)
 	rat_type = models.CharField(max_length=12, db_column='Type', choices=RAT_TYPE_CHOICES, default='F')
+
+	def save(self):
+		# update total score to be the sum of search_path, critical_path, easter_egg, and penalty.
+		self.round_score = self.search_path + self.critical_path + self.penalty
+		if( self.rat_type is 'S'):
+			self.round_score = self.round_score + self.easter_egg
+		self.total_score = self.round_score
+		super(FastRatsTableEntry, self).save()
 
 	def __unicode__(self):
 		return self.team

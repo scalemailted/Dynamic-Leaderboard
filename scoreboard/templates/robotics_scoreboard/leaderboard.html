@@ -95,7 +95,7 @@
                     success: function(o) {
                         
                         var scores = [];
-                        for (i = 0; i < o.length; i++) {scores.push(o[i].total);}
+                        for (i = 0; i < o.length; i++) {scores.push(o[i].total_score);}
                         var sorted = scores.slice().sort(function(a,b){return b-a});
                         var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
 
@@ -118,7 +118,7 @@
                             else
                             {
                                 // this id does exist, so update 'score' count in the h1 tag in the list item.
-                                $('#fastRat-'+o[i].id).find("#total_column").html(o[i].total);
+                                $('#fastRat-'+o[i].id).find("#total_column").html(o[i].total_score);
                                 $('#fastRat-'+o[i].id).find(".rank").html(ranks[i]);
                             }
                         }
@@ -131,7 +131,7 @@
                     dataType: 'json',
                     success: function(o) {
                         var scores = [];
-                        for (i = 0; i < o.length; i++) {scores.push(o[i].total);}
+                        for (i = 0; i < o.length; i++) {scores.push(o[i].total_score);}
                         var sorted = scores.slice().sort(function(a,b){return b-a});
                         var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
                                  
@@ -151,13 +151,13 @@
                                                             '<span class="critical_time">' + o[i].time + '</span>'+
                                                             '<span class="easter_egg">' + o[i].easter_egg + '</span>'+
                                                             '<span class="penalty">' + o[i].penalty + '</span>'+
-                                                            '<span id="total_column" class="total_score">' + o[i].total + '</span>'+
+                                                            '<span id="total_column" class="total_score">' + o[i].total_score + '</span>'+
                                                          '</li>');
                             }
                             else
                             {
                                 // this id does exist, so update 'score' count in the h1 tag in the list item.
-                                $('#user-'+o[i].id).find("#total_column").html(o[i].total);
+                                $('#user-'+o[i].id).find("#total_column").html(o[i].total_score);
                                 $('#user-'+o[i].id).find(".rank").html(ranks[i]);
 
                             }
