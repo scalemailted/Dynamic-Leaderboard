@@ -6,4 +6,7 @@ urlpatterns = patterns('',
 	url(r'fastRatsData', views.getFastRatsJson, name='getFastRatsTable')
 	)
 
-#,url(r'smartRatsData', views.getSmartRatsJson, name='getSmartRatsTable')
+'''
+,
+	url(r'smartRatsData', views.getSmartRatsJson, name='getSmartRatsTable')
+'''

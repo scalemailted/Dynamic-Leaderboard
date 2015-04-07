@@ -24,11 +24,10 @@ def getFastRatsJson(request):
 	fastRats = list(FastRatsTableEntry.objects.all().values())
 	#context_dict = {'fastRats': fastRats }
 	return JsonResponse(data=fastRats, safe=False)
-'''
+
 def getSmartRatsJson(request):
 	#Get all of the records from the database
 	# add cast the collection into a list
-	smartRats = list(SmartRatsTableEntry.objects.all().values())
+	smartRats = list(FastRatsTableEntry.objects.filter(rat_type='S').values())
 	#context_dict = {'fastRats': fastRats }
 	return JsonResponse(data=smartRats, safe=False)
-'''

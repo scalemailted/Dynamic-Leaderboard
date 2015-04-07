@@ -55,11 +55,13 @@
                 <div class="table-row">
             	    <span id="left-header" class="rank">Rank</span>
             	    <span id="left-header" class="team">Team</span>
-                    <span id="left-header" class="search_path">Search</span>
-                    <span id="left-header" class="critical_path">Critical</span>
-                    <span id="left-header" class="critical_time">Time</span>
-                    <span id="left-header" class="penalty">Penalty</span>
                     <span id="left-header" class="total_score">Total</span>
+                    <span id="left-header" class="round_score">Round</span>
+                    <span id="left-header" class="critical_path">Critical Path</span>
+                    <span id="left-header" class="critical_time">Critical Time</span>
+                    <span id="left-header" class="search_path">Search Path</span>
+                    <span id="left-header" class="search_time">Search Time</span>
+                    <span id="left-header" class="penalty">Penalty</span>
                 </div> 
                 <ol id="leaderboard"></ol>
             </div>
@@ -69,12 +71,14 @@
                 <div class="table-row">
                     <span id="right-header" class="rank">Rank</span>
             	    <span id="right-header" class="team">Team</span>
-                    <span id="right-header" class="search_path">Search</span>
-                    <span id="right-header" class="critical_path">Critical</span>
-                    <span id="right-header" class="critical_time">Time</span>
+                    <span id="right-header" class="total_score">Total</span>
+                    <span id="right-header" class="round_score">Round</span>
+                    <span id="right-header" class="critical_path">Critical Path</span>
+                    <span id="right-header" class="critical_time">Critical Time</span>
+                    <span id="right-header" class="search_path">Search Path</span>
+                    <span id="right-header" class="search_time">Search Time</span>
 	                <span id="right-header" class="easter_egg">Easter Egg</span>
                     <span id="right-header" class="penalty">Penalty</span>
-                    <span id="right-header" class="total_score">Total</span>
                 </div>
                 <ol id="smart-leaderboard"></ol>
             </div>
@@ -108,11 +112,13 @@
                                                          '<li class="table-row" id= "fastRat-' + o[i].id + '">'+
                                                             '<span class="rank">' + ranks[i] + '</span>'+
                                                             '<span class="team">' + o[i].team + '</span>'+
-                                                            '<span class="search_path">'+ o[i].search_path + '</span>'+
+                                                            '<span id="total_column" class="total_score">' + o[i].total_score + '</span>'+
+                                                            '<span id="round_column" class="round_score">' + o[i].round_score + '</span>'+
                                                             '<span class="critical_path">' + o[i].critical_path+ '</span>'+
                                                             '<span class="critical_time">' + o[i].critical_time + '</span>'+
+                                                            '<span class="search_path">'+ o[i].search_path + '</span>'+
+                                                            '<span class="search_time">'+ o[i].search_time + '</span>'+
                                                             '<span class="penalty">' + o[i].penalty + '</span>'+
-                                                            '<span id="total_column" class="total_score">' + o[i].total_score + '</span>'+
                                                          '</li>');
                             }
                             else
@@ -146,9 +152,9 @@
                                                          '<li class="table-row" id= "user-' + o[i].id +'">'+
                                                             '<span class="rank">' + ranks[i] + '</span>'+
                                                             '<span class="team">' + o[i].team + '</span>'+
-                                                            '<span class="search_path">' + o[i].search + '</span>'+
-                                                            '<span class="critical_path">' + o[i].critical+ '</span>'+
-                                                            '<span class="critical_time">' + o[i].time + '</span>'+
+                                                            '<span class="search_path">' + o[i].search_path + '</span>'+
+                                                            '<span class="critical_path">' + o[i].critical_path+ '</span>'+
+                                                            '<span class="critical_time">' + o[i].critical_time + '</span>'+
                                                             '<span class="easter_egg">' + o[i].easter_egg + '</span>'+
                                                             '<span class="penalty">' + o[i].penalty + '</span>'+
                                                             '<span id="total_column" class="total_score">' + o[i].total_score + '</span>'+
