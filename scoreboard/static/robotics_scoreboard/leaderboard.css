@@ -119,17 +119,22 @@ background-color: #c08;
 
 }
 
+#scoreboard
+{
+    text-align: center;
+}
+
 #leftcolumn 
 {
-    /*display: inline-block;*/
-    float: left;
+    display: inline-block;
+    /*float: left;*/
 
 }
 
 #rightcolumn 
 {
-    /*display: inline-block;*/
-    float: right;
+    display: inline-block;
+    /*float: right;*/
 
 }
 
@@ -152,6 +157,9 @@ background-color: #c08;
     /*width: 50px;*/
 }
 
+.table-row:nth-child(even){
+    background:#ddd;
+}
 
 #total_column
 {

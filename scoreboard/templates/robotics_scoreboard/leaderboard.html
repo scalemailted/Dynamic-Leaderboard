@@ -5,9 +5,10 @@
         {% load staticfiles %}
 
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <script src="http://code.jquery.com/jquery-1.11.2.js" type="text/javascript"></script>
+        <!-- <script src="http://code.jquery.com/jquery-1.11.2.js" type="text/javascript"></script>-->
+        <script src={% static "robotics_scoreboard/jquery-1.11.2.js" %} type="text/javascript"></script>
         <script src={% static "robotics_scoreboard/jquery.tinysort.js" %} type="text/javascript"></script>
-        <script src="http://www.bitstorm.org/jquery/color-animation/jquery.animate-colors.js" type="text/javascript"></script>
+        <!--<script src="http://www.bitstorm.org/jquery/color-animation/jquery.animate-colors.js" type="text/javascript"></script>-->
         <link rel="stylesheet" type="text/css" href={% static 'robotics_scoreboard/leaderboard.css' %} media="screen" />
 
         <title>IEEE Robotics Leaderboard</title>
@@ -48,9 +49,9 @@
         </br>
         
         -->
-        <div>
+        <div id="scoreboard">
             <div id="leftcolumn">
-		<span id="left-header" class="left-title">Fast Rats</span>
+		        <span id="left-header" class="left-title">Fast Rats</span>
                 <div class="table-row">
             	    <span id="left-header" class="cell1">Rank</span>
             	    <span id="left-header" class="cell2">Team</span>
@@ -64,14 +65,14 @@
             </div>
 
             <div id="rightcolumn">
-		<span id="right-header" class="right-title">Smart Rats</span>
+		        <span id="right-header" class="right-title">Smart Rats</span>
                 <div class="table-row">
                     <span id="right-header" class="cell1">Rank</span>
             	    <span id="right-header" class="cell2">Team</span>
                     <span id="right-header" class="cell3">Search</span>
                     <span id="right-header" class="cell4">Critical</span>
                     <span id="right-header" class="cell5">Time</span>
-	            <span id="right-header" class="cell6">Easter Egg</span>
+	                <span id="right-header" class="cell6">Easter Egg</span>
                     <span id="right-header" class="cell7">Penalty</span>
                     <span id="right-header" class="cell1">Total</span>
                 </div>
@@ -97,7 +98,7 @@
                         for (i = 0; i < o.length; i++) {scores.push(o[i].total);}
                         var sorted = scores.slice().sort(function(a,b){return b-a});
                         var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
-                                 
+
                         for(i=0;i<o.length;i++)
                         {
                             if ($('#fastRat-'+o[i].id).length == 0)
@@ -118,59 +119,12 @@
                             {
                                 // this id does exist, so update 'score' count in the h1 tag in the list item.
                                 $('#fastRat-'+o[i].id).find("#total_column").html(o[i].total);
+                                $('#fastRat-'+o[i].id).find(".cell1").html(ranks[i]);
                             }
                         }
-                        sort();
+                        sort('ol#leaderboard');
                     },
                 });
-                //TEST DATA CODE
-                /*
-                var o = [
-			 {"id": "1", "score": 2000, "username": "A"},
-                         {"id": "2", "score": 1900, "username": "BB"},
-                         {"id": "3", "score": 1800, "username": "CCC"},
-                         {"id": "4", "score": 1700, "username": "DDDD"},
-                         {"id": "5", "score": 1600, "username": "EEE"},
-                         {"id": "6", "score": 1500, "username": "FFF"},
-                         {"id": "7", "score": 1400, "username": "GGG"},
-                         {"id": "8", "score": 1300, "username": "HHH"},
-                         {"id": "9", "score": 1200, "username": "K"},
-                         {"id": "10", "score": 1100, "username": "LL"},
-			 {"id": "11", "score": 1000, "username": "AX"},
-                         {"id": "12", "score": 900, "username": "BXXX"},
-                         {"id": "13", "score": 800, "username": "CXXX"},
-                         {"id": "14", "score": 700, "username": "DXXX"},
-                         {"id": "15", "score": 600, "username": "EXXX"},
-                         {"id": "16", "score": 500, "username": "FXXX"},
-                         {"id": "17", "score": 400, "username": "GXXX"},
-                         {"id": "18", "score": 300, "username": "HXXX"},
-                         {"id": "19", "score": 200, "username": "KXXX"},
-			 {"id": "21", "score": 190, "username": "AX"},
-                         {"id": "22", "score": 180, "username": "BXXX"},
-                         {"id": "23", "score": 170, "username": "CXXX"},
-                         {"id": "24", "score": 160, "username": "DXXX"},
-                         {"id": "25", "score": 150, "username": "EXXX"},
-                         {"id": "26", "score": 140, "username": "FXXX"},
-                         {"id": "27", "score": 130, "username": "GXXX"},
-                         {"id": "28", "score": 120, "username": "HXXX"},
-                         {"id": "29", "score": 110, "username": "KXXX"},
-                         {"id": "36", "score": 1800, "username": "LXXX"}];
-                         
-                */
-
-         /*       
-		//Smart Leaderboard
-		var o = [{"id": "1", "score": 1000, "username": "AX"},
-                         {"id": "2", "score": 900, "username": "BXXX"},
-                         {"id": "3", "score": 800, "username": "CXXX"},
-                         {"id": "4", "score": 700, "username": "DXXX"},
-                         {"id": "5", "score": 600, "username": "EXXX"},
-                         {"id": "6", "score": 500, "username": "FXXX"},
-                         {"id": "7", "score": 400, "username": "GXXX"},
-                         {"id": "8", "score": 300, "username": "HXXX"},
-                         {"id": "9", "score": 200, "username": "KXXX"},
-                         {"id": "36", "score": 1800, "username": "LXXX"}];
-        */        
 
         $.ajax ({
                     url: '/robotics_scoreboard/smartRatsData',
@@ -189,11 +143,6 @@
                             {
                                 // this id doesn't exist, so add it to our list.
                                 $("#smart-leaderboard").append(
-                                                         //'<li >' +
-                                                         //   '<span align="center" min-width="10px">' + ranks[i] + '</span>'+
-                                                         //   '<span id="user-' + o[i].id + '">' + o[i].username + '</span>' +
-                                                         //   '<span align="right" id="user-' + o[i].id + '">' +" " + o[i].score+ '</span>'+
-                                                         //'</li>');
                                                          '<li class="table-row" id= "user-' + o[i].id +'">'+
                                                             '<span class="cell1">' + ranks[i] + '</span>'+
                                                             '<span class="cell2">' + o[i].team + '</span>'+
@@ -201,7 +150,7 @@
                                                             '<span class="cell4">' + o[i].critical+ '</span>'+
                                                             '<span class="cell5">' + o[i].time + '</span>'+
                                                             '<span class="cell6">' + o[i].easter_egg + '</span>'+
-                                    '<span class="cell6">' + o[i].penalty + '</span>'+
+                                                            '<span class="cell6">' + o[i].penalty + '</span>'+
                                                             '<span id="total_column" class="cell7">' + o[i].total + '</span>'+
                                                          '</li>');
                             }
@@ -214,54 +163,33 @@
                             }
                         }
                         
-                        smart_sort();
+                        sort('ol#smart-leaderboard');
                     },
                 }); 
                 
 
             
                 // play it again, sam
-                var t=setTimeout("poll()",2500);
+                var t=setTimeout("poll()",5000);
             }
         
         
-        function sort()
+        function sort(listname)
         {
-            var $Ol = $('ol#leaderboard');
+            var $Ol = $(listname);
             $Ol.css({position:'relative',height:$Ol.height(),display:'block'});
             var iLnH;
-            var $Li = $('ol#leaderboard>li');
+            var $Li = $(listname+'>li');
             $Li.each(function(i,el){
-                     var iY = $(el).position().top;
+                     var iY = $(el).position().top; 
                      $.data(el,'h',iY);
                      if (i===1) iLnH = iY;
                      });
-            $Li.tsort( 'span:eq(6)' ,{order:'desc'}).each(function(i,el){
-                                                      var $El = $(el);
-                                                      var iFr = $.data(el,'h');
+            $Li.tsort( 'span:eq(0)').each(function(i,el){
+                                                      var $El = $(el); 
+                                                      var iFr = $.data(el,'h'); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, start:function(){if (iFr > iTo) {el.style.color="white"; } if (i%2==1) el.style.backgroundColor='#ddd';}, complete:function(){el.style.color="black"; el.style.fontWeight = 'normal'; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) el.style.backgroundColor='#ddd';}, progress:function(){if (iFr > iTo) {el.style.fontWeight = 'bold'; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
-                                                     });
-                                                    
-        }
-
-
-        function smart_sort()
-        {
-            var $Ol = $('ol#smart-leaderboard');
-            $Ol.css({position:'relative',height:$Ol.height(),display:'block'});
-            var iLnH;
-            var $Li = $('ol#smart-leaderboard>li');
-            $Li.each(function(i,el){
-                     var iY = $(el).position().top;
-                     $.data(el,'h',iY);
-                     if (i===1) iLnH = iY;
-                     });
-            $Li.tsort( 'span:eq(7)' ,{order:'desc'}).each(function(i,el){
-                                                      var $El = $(el);
-                                                      var iFr = $.data(el,'h');
-                                                      var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 1500, start:function(){if (iFr > iTo) {el.style.color="white"; } if (i%2==1) el.style.backgroundColor='#ddd';}, complete:function(){el.style.color="black"; el.style.fontWeight = 'normal'; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) el.style.backgroundColor='#ddd';}, progress:function(){if (iFr > iTo) {el.style.fontWeight = 'bold'; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function(){el.style.color="black"; el.style.fontWeight = 'normal'; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) el.style.backgroundColor='#ddd';}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.fontWeight = 'bold'; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
                                                      });
                                                     
         }
