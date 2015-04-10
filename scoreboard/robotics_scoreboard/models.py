@@ -17,6 +17,39 @@ class Page(models.Model):
 	def __unicode__(self):
 		return self.title
 
+class Team(models.Model):
+	RAT_TYPE_CHOICES = [ 
+	('F', 'Fast Rat'),
+	('S', 'Smart Rat')
+	]
+	team_name = models.CharField(max_length=10, unique=True, db_column='Team')
+	team_number = models.IntegerField(default=0, unique=True, db_column='TeamNumber')
+	rat_type = models.CharField(max_length=12, db_column='Type', choices=RAT_TYPE_CHOICES, default='F')
+
+	def __unicode__(self):
+		return self.team_name
+
+class Score(models.Model):
+	ROUND_OPTIONS = [
+	('1', 'One'), 
+	('2', 'Two'), 
+	('3', 'Three'),
+	('F', 'Final')
+	]
+
+	team = models.ForeignKey(Team, related_name='Scores', related_query_name="score")
+	round = models.CharField(max_length=5, db_column="Round", choices=ROUND_OPTIONS, default=1)
+	search_path = models.IntegerField(default=0,db_column='SearchPath')
+	search_time = models.CharField(max_length=10,default='0', db_column='SearchTime')
+	critical_path = models.IntegerField(default=0, db_column='CriticalPath')
+	critical_time = models.CharField(max_length=10, default='0', db_column='CriticalTime')
+	easter_egg = models.IntegerField(default=0, db_column='EasterEgg')
+	penalty = models.IntegerField(default=0, db_column='Penalty')
+	round_score = models.IntegerField(default=0, db_column='RoundScore', editable=False)
+	
+
+
+
 class FastRatsTableEntry(models.Model):
 	RAT_TYPE_CHOICES = [ 
 	('F', 'Fast Rat'),
@@ -43,6 +76,7 @@ class FastRatsTableEntry(models.Model):
 
 	def __unicode__(self):
 		return self.team
+
 '''
 class SmartRatsTableEntry(models.Model):
 	team = models.CharField(max_length=10, unique=True, db_column='Team')

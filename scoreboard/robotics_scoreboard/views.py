@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from robotics_scoreboard.models import FastRatsTableEntry
-#, SmartRatsTableEntry
+from robotics_scoreboard.models import FastRatsTableEntry, Team, Score
+from django.db import connection
 
 # Create your views here.
 def scoreboard(request):
@@ -31,3 +31,42 @@ def getSmartRatsJson(request):
 	smartRats = list(FastRatsTableEntry.objects.filter(rat_type='S').values())
 	#context_dict = {'fastRats': fastRats }
 	return JsonResponse(data=smartRats, safe=False)
+
+def getTeamData(request):
+	teamData = list(createTeamScoreDict())
+	return JsonResponse(data=teamData, safe=False)
+
+#helper methods
+
+def createTeamScoreDict( ):
+    #create cursor that will perform the query
+    cursor = connection.cursor()
+    
+    #define the raw sql query that will create the composite entry data
+    # that will be serialized as JSON for the view
+    query = ('SELECT '
+    'robotics_scoreboard_team.Team AS team,'
+    'robotics_scoreboard_team.TeamNumber AS team_number,'
+    'robotics_scoreboard_team.Type AS rat_type,'
+    'robotics_scoreboard_score.SearchPath AS search_path,'
+    'robotics_scoreboard_score.SearchTime AS search_time,'
+    'robotics_scoreboard_score.CriticalPath AS critical_path,'
+    'robotics_scoreboard_score.CriticalTime AS critical_time,'
+    'robotics_scoreboard_score.EasterEgg AS easter_egg,'
+    'robotics_scoreboard_score.Penalty AS penalty,'
+    'robotics_scoreboard_score.RoundScore AS round_score,' 
+    'robotics_scoreboard_score.id '
+    'FROM robotics_scoreboard_score '
+    'JOIN robotics_scoreboard_team '
+    'ON robotics_scoreboard_team.id=robotics_scoreboard_score.team_id'
+    )
+
+    cursor.execute(query)
+
+     #get a tuple of the field/column names
+    desc = cursor.description
+    print(desc)
+
+    return [dict(zip([col[0] for col in desc ], row ))
+    for row in cursor.fetchall()
+    ]
