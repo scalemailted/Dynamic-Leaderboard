@@ -73,10 +73,10 @@
             	    <span id="right-header" class="team">Team</span>
                     <span id="right-header" class="total_score">Total</span>
                     <span id="right-header" class="round_score">Round</span>
-                    <span id="right-header" class="critical_path">Crit Path</span>
-                    <span id="right-header" class="critical_time">Crit Time</span>
-                    <span id="right-header" class="search_path">Srch Path</span>
-                    <span id="right-header" class="search_time">Srch Time</span>
+                    <span id="right-header" class="critical_path">Critical Path</span>
+                    <span id="right-header" class="critical_time">Critical Time</span>
+                    <span id="right-header" class="search_path">Search Path</span>
+                    <span id="right-header" class="search_time">Search Time</span>
 	                <span id="right-header" class="easter_egg">Easter Egg</span>
                     <span id="right-header" class="penalty">Penalty</span>
                 </div>
