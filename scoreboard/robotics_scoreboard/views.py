@@ -48,6 +48,9 @@ def createTeamScoreDict( ):
     'robotics_scoreboard_team.Team AS team,'
     'robotics_scoreboard_team.TeamNumber AS team_number,'
     'robotics_scoreboard_team.Type AS rat_type,'
+    'robotics_scoreboard_team.TotalScore AS total_score, '
+    'robotics_scoreboard_team.InFinal AS in_final,'
+    'robotics_scoreboard_team.Disqualified AS disqualified, '
     'robotics_scoreboard_score.SearchPath AS search_path,'
     'robotics_scoreboard_score.SearchTime AS search_time,'
     'robotics_scoreboard_score.CriticalPath AS critical_path,'
@@ -60,13 +63,14 @@ def createTeamScoreDict( ):
     'JOIN robotics_scoreboard_team '
     'ON robotics_scoreboard_team.id=robotics_scoreboard_score.team_id'
     )
-
+    #execute query to populate the cursor's description collection
     cursor.execute(query)
 
-     #get a tuple of the field/column names
+    #get a tuple of the field/column names
     desc = cursor.description
-    print(desc)
+    #print(desc)
 
+    #construct and return a dictionary with the alias names as the keys and the field values
     return [dict(zip([col[0] for col in desc ], row ))
     for row in cursor.fetchall()
     ]

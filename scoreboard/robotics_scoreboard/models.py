@@ -25,6 +25,9 @@ class Team(models.Model):
 	team_name = models.CharField(max_length=10, unique=True, db_column='Team')
 	team_number = models.IntegerField(default=0, unique=True, db_column='TeamNumber')
 	rat_type = models.CharField(max_length=12, db_column='Type', choices=RAT_TYPE_CHOICES, default='F')
+	in_final = models.BooleanField(default=False, db_column='InFinal')
+	disqualified = models.BooleanField(default=False, db_column='Disqualified')
+	total_score = models.IntegerField(default=0, db_column='TotalScore')
 
 	def __unicode__(self):
 		return self.team_name
