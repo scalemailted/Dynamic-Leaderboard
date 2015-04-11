@@ -176,7 +176,7 @@
 
             
                 // play it again, sam
-                var t=setTimeout("poll()",5000);
+                var t=setTimeout("poll()",7500);
             }
         
         
@@ -190,12 +190,12 @@
                      var iY = $(el).position().top; 
                      $.data(el,'h',iY);
                      if (i===1) iLnH = iY;
-                     });
+                     }); 
             $Li.tsort( 'span:eq(0)').each(function(i,el){
                                                       var $El = $(el); 
-                                                      var iFr = $.data(el,'h'); 
+                                                      var iFr = $.data(el,'h'); iFr = Number(iFr.toFixed(0)); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function(){el.style.color="black"; el.style.fontWeight = 'normal'; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) el.style.backgroundColor='#ddd';}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.fontWeight = 'bold'; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function(){if(iFr>iTo){alert("i:" + i +", iLnH:"+ iLnH+", iFr:"+iFr+", iTo:"+iTo);} el.style.color="black"; el.style.fontWeight = 'normal'; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) el.style.backgroundColor='#ddd';}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.fontWeight = 'bold'; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
                                                      });
                                                     
         }
