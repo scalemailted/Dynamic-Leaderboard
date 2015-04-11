@@ -30,62 +30,6 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
-/*
-#fast_rats ul
-{
-float: left;
-margin: 0;
-padding: 0;
-list-style-type: none;
-text-align: center;
-}
-
-#fast_rats ul li { display: inline; }
-
-#fast_rats ul li a
-{
-text-decoration: none;
-padding: .2em 1em;
-color: #fff;
-background-color: #036;
-}
-
-#fast_rats ul li a:hover
-{
-color: #fff;
-background-color: #369;
-}
-
-
-#smart_rats ul
-{
-float: right;
-margin: 0;
-padding: 0;
-list-style-type: none;
-text-align: center;
-}
-
-#smart_rats ul li { display: inline; }
-
-#smart_rats ul li a
-{
-text-decoration: none;
-padding: .2em 1em;
-color: #fff;
-background-color: #900;
-}
-
-#smart_rats ul li a:hover
-{
-color: #fff;
-background-color: #c08;
-}
-
-*/
-
-
-
 .right-title
 {
     padding-top: 5px;
@@ -98,7 +42,7 @@ background-color: #c08;
     border-top: 0;
     border-bottom-width: 1px;
     border-color: #fff;
-    width: 619px;
+    width: 100%; !important
 
 }
 
@@ -115,7 +59,7 @@ background-color: #c08;
     border-top: 0;
     border-bottom-width: 1px;
     border-color: #fff;
-    width: 537px;
+    width: 100%;
 
 }
 
