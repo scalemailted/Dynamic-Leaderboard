@@ -43,12 +43,15 @@ class Score(models.Model):
 	team = models.ForeignKey(Team, related_name='Scores', related_query_name="score")
 	round = models.CharField(max_length=5, db_column="Round", choices=ROUND_OPTIONS, default=1)
 	search_path = models.IntegerField(default=0,db_column='SearchPath')
-	search_time = models.CharField(max_length=10,default='0', db_column='SearchTime')
+	search_time = models.DecimalField(max_digits=10, decimal_places=1, default=0.0, db_column='SearchTime')
 	critical_path = models.IntegerField(default=0, db_column='CriticalPath')
-	critical_time = models.CharField(max_length=10, default='0', db_column='CriticalTime')
+	critical_time = models.DecimalField(max_digits=10, decimal_places=1,default=0.0, db_column='CriticalTime')
 	easter_egg = models.IntegerField(default=0, db_column='EasterEgg')
 	penalty = models.IntegerField(default=0, db_column='Penalty')
 	round_score = models.IntegerField(default=0, db_column='RoundScore', editable=False)
+
+	def __unicode__(self):
+		return '{} - Round {}'.format(Team.objects.get(pk=self.team_id).team_name, self.round)
 	
 
 
