@@ -48,24 +48,21 @@
             </div>
         </div>        
 
-        <!--
-        <p>Hello World!</p>
-        <p>The DOM is very useful!</p>
-        <p id="demo"></p>
-        -->
+
 
         <script type="text/javascript">
+        var RANK=0, TEAM=1, TOT=2, RND=3, CPATH=4, CTIME=5, SPATH=6, STIME=7, PNLTY=8, PREQ=9, DISQ=10;
 
             poll();
 
-function poll()
+            function poll()
             {
 
                 $.ajax ({
                     url: '/robotics_scoreboard/teamData',
                     dataType: 'json',
                     success: function(o) {
-                        
+
                         var scores = [];
                         for (i = 0; i < o.length; i++) {scores.push(o[i].total_score);}
                         var sorted = scores.slice().sort(function(a,b){return b-a});
@@ -87,29 +84,40 @@ function poll()
                                                             '<span class="search_path">'+ o[i].search_path + '</span>'+
                                                             '<span class="search_time">'+ o[i].search_time + '</span>'+
                                                             '<span class="penalty">' + o[i].penalty + '</span>'+
+                                                            '<span class="prequalified">' + o[i].in_final + '</span>'+
+                                                            '<span class="disqualified">' + o[i].disqualified + '</span>'+
                                                          '</li>');
                             }
                             else
                             {
                                 // this id does exist, so update 'score' count in the h1 tag in the list item.
-                                $('#fastRat-'+o[i].id).find("#total_column").html(o[i].total_score);
-                                $('#fastRat-'+o[i].id).find(".rank").html(ranks[i]); //alert("index:" +i+", rank:" + ranks[i])
+                                $('#fastRat-'+o[i].id).find(".rank").html(ranks[i]); 
+                                $('#fastRat-'+o[i].id).find(".total_score").html(o[i].total_score);
+                                $('#fastRat-'+o[i].id).find(".round_score").html(o[i].round_score);
+                                $('#fastRat-'+o[i].id).find(".critial_path").html(o[i].critical_path); 
+                                $('#fastRat-'+o[i].id).find(".critical_time").html(o[i].critical_time); 
+                                $('#fastRat-'+o[i].id).find(".search_path").html(o[i].search_path);
+                                $('#fastRat-'+o[i].id).find(".search_time").html(o[i].search_time);
+                                $('#fastRat-'+o[i].id).find(".penalty").html(o[i].penalty); 
+                                $('#fastRat-'+o[i].id).find(".prequalified").html(o[i].in_final); 
+                                $('#fastRat-'+o[i].id).find(".disqualified").html(o[i].disqualified);
                             }
                         }
-                        sort('ul#leaderboard', ranks);
+                        sort('ul#leaderboard', o);
 
                     },
                 });
 
                 // play it again, sam
-                var t=setTimeout("poll()",7500);
+                var t=setTimeout("poll()",5000);
+                var width = $(window).width() - 25; $("#scoreboard").width(width);
             }
 
 
 
    
 
-function sort(listname, ranks)
+        function sort(listname, json_object)
         {
             var $Ul = $(listname);
             $Ul.css({position:'relative',height:$Ul.height(),display:'block'});
@@ -126,9 +134,10 @@ function sort(listname, ranks)
                                                       var $El = $(el); 
                                                       var iFr = $.data(el,'h'); iFr = Number(iFr.toFixed(0)); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function(){/*if(iFr>iTo){alert("i:" + i +", iLnH:"+ iLnH+", iFr:"+iFr+", iTo:"+iTo+", new rank:" + ranks[iFr/20] + ", old rank:" + ranks[i]);}*/ el.style.color="black"; el.style.fontWeight = 'normal'; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) el.style.backgroundColor='#ddd';}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.fontWeight = 'bold'; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
-                                                     });
-}
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='#ddd';} if (el.children[PREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[DISQ].innerHTML === "true") { el.style.backgroundColor='pink'; el.style.color="white";}}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+            });  
+        }
+
 
         </script>
 

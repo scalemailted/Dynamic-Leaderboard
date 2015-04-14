@@ -82,9 +82,15 @@ footer, header, hgroup, menu, nav, section {
 
 }
 
+
 .table-row 
 {
     display: table-row;
+}
+
+
+.table-row:nth-child(even){
+    background:#ddd;
 }
 
 .rank, .team, .search_path, .search_time, .critical_path, .critical_time, .penalty, .total_score, .easter_egg, .round_score 
@@ -98,12 +104,16 @@ footer, header, hgroup, menu, nav, section {
     border-top: 0;
     border-bottom: 0;
     border-color: #fff;
+    font-weight: bold;
     /*width: 50px;*/
 }
 
-.table-row:nth-child(even){
-    background:#ddd;
+.prequalified, .disqualified
+{
+    display: none;
 }
+
+
 
 #total_column
 {
