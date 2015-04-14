@@ -27,7 +27,7 @@
                     <span id="left-header" class="search_time">Srch Time</span>
                     <span id="left-header" class="penalty">Penalty</span>
                 </div> 
-                <ul id="leaderboard"></ul>
+                <ul id="fastboard"></ul>
             </div>
 
             <div id="rightcolumn">
@@ -44,28 +44,28 @@
 	                <span id="right-header" class="easter_egg">Easter Egg</span>
                     <span id="right-header" class="penalty">Penalty</span>
                 </div>
-                <ul id="smart-leaderboard"></ul>
+                <ul id="smartboard"></ul>
             </div>
         </div>        
 
-        <!--
-        <p>Hello World!</p>
-        <p>The DOM is very useful!</p>
-        <p id="demo"></p>
-        -->
+
 
         <script type="text/javascript">
+        var RANK=0, TEAM=1, TOT=2, RND=3, CPATH=4, CTIME=5, SPATH=6, STIME=7, PNLTY=8, PREQ=9, DISQ=10;
+        var SRANK=0, STEAM=1, STOT=2, SRND=3, SCPATH=4, SCTIME=5, SSPATH=6, SSTIME=7, SEEGG=8, SPNLTY=9, SPREQ=10, SDISQ=11;
 
             poll();
 
-function poll()
+            function poll()
             {
 
-                $.ajax ({
+
+                   //FAST RATS 
+                   $.ajax ({
                     url: '/robotics_scoreboard/teamData',
                     dataType: 'json',
                     success: function(o) {
-                        
+
                         var scores = [];
                         for (i = 0; i < o.length; i++) {scores.push(o[i].total_score);}
                         var sorted = scores.slice().sort(function(a,b){return b-a});
@@ -76,7 +76,7 @@ function poll()
                             if ($('#fastRat-'+o[i].id).length == 0)
                             {
                                 // this id doesn't exist, so add it to our list.
-                                $("#leaderboard").append(
+                                $("#fastboard").append(
                                                          '<li class="table-row" id= "fastRat-' + o[i].id + '">'+
                                                             '<span class="rank">' + ranks[i] + '</span>'+
                                                             '<span class="team">' + o[i].team + '</span>'+
@@ -87,29 +87,94 @@ function poll()
                                                             '<span class="search_path">'+ o[i].search_path + '</span>'+
                                                             '<span class="search_time">'+ o[i].search_time + '</span>'+
                                                             '<span class="penalty">' + o[i].penalty + '</span>'+
+                                                            '<span class="prequalified">' + o[i].in_final + '</span>'+
+                                                            '<span class="disqualified">' + o[i].disqualified + '</span>'+
                                                          '</li>');
                             }
                             else
                             {
                                 // this id does exist, so update 'score' count in the h1 tag in the list item.
-                                $('#fastRat-'+o[i].id).find("#total_column").html(o[i].total_score);
-                                $('#fastRat-'+o[i].id).find(".rank").html(ranks[i]); //alert("index:" +i+", rank:" + ranks[i])
+                                $('#fastRat-'+o[i].id).find(".rank").html(ranks[i]); 
+                                $('#fastRat-'+o[i].id).find(".total_score").html(o[i].total_score);
+                                $('#fastRat-'+o[i].id).find(".round_score").html(o[i].round_score);
+                                $('#fastRat-'+o[i].id).find(".critial_path").html(o[i].critical_path); 
+                                $('#fastRat-'+o[i].id).find(".critical_time").html(o[i].critical_time); 
+                                $('#fastRat-'+o[i].id).find(".search_path").html(o[i].search_path);
+                                $('#fastRat-'+o[i].id).find(".search_time").html(o[i].search_time);
+                                $('#fastRat-'+o[i].id).find(".penalty").html(o[i].penalty); 
+                                $('#fastRat-'+o[i].id).find(".prequalified").html(o[i].in_final); 
+                                $('#fastRat-'+o[i].id).find(".disqualified").html(o[i].disqualified);
                             }
                         }
-                        sort('ul#leaderboard', ranks);
+                        sort('ul#fastboard');
 
                     },
                 });
 
+                //SMART RATS
+                $.ajax ({
+                    url: '/robotics_scoreboard/teamData',
+                    dataType: 'json',
+                    success: function(o) {
+
+                        var scores = [];
+                        for (i = 0; i < o.length; i++) {scores.push(o[i].total_score);}
+                        var sorted = scores.slice().sort(function(a,b){return b-a});
+                        var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
+
+                        for(i=0;i<o.length;i++)
+                        {
+                            if ($('#smartRat-'+o[i].id).length == 0)
+                            {
+                                // this id doesn't exist, so add it to our list.
+                                $("#smartboard").append(
+                                                         '<li class="table-row" id= "smartRat-' + o[i].id + '">'+
+                                                            '<span class="rank">' + ranks[i] + '</span>'+
+                                                            '<span class="team">' + o[i].team + '</span>'+
+                                                            '<span id="total_column" class="total_score">' + o[i].total_score + '</span>'+
+                                                            '<span id="round_column" class="round_score">' + o[i].round_score + '</span>'+
+                                                            '<span class="critical_path">' + o[i].critical_path+ '</span>'+
+                                                            '<span class="critical_time">' + o[i].critical_time + '</span>'+
+                                                            '<span class="search_path">'+ o[i].search_path + '</span>'+
+                                                            '<span class="search_time">'+ o[i].search_time + '</span>'+
+                                                            '<span class="easter_egg">'+ o[i].easter_egg + '</span>'+
+                                                            '<span class="penalty">' + o[i].penalty + '</span>'+
+                                                            '<span class="prequalified">' + o[i].in_final + '</span>'+
+                                                            '<span class="disqualified">' + o[i].disqualified + '</span>'+
+                                                         '</li>');
+                            }
+                            else
+                            {
+                                // this id does exist, so update 'score' count in the h1 tag in the list item.
+                                $('#smartRat-'+o[i].id).find(".rank").html(ranks[i]); 
+                                $('#smartRat-'+o[i].id).find(".total_score").html(o[i].total_score);
+                                $('#smartRat-'+o[i].id).find(".round_score").html(o[i].round_score);
+                                $('#smartRat-'+o[i].id).find(".critial_path").html(o[i].critical_path); 
+                                $('#smartRat-'+o[i].id).find(".critical_time").html(o[i].critical_time); 
+                                $('#smartRat-'+o[i].id).find(".search_path").html(o[i].search_path);
+                                $('#smartRat-'+o[i].id).find(".search_time").html(o[i].search_time);
+                                $('#smartRat-'+o[i].id).find(".easter_egg").html(o[i].easter_egg);
+                                $('#smartRat-'+o[i].id).find(".penalty").html(o[i].penalty); 
+                                $('#smartRat-'+o[i].id).find(".prequalified").html(o[i].in_final); 
+                                $('#smartRat-'+o[i].id).find(".disqualified").html(o[i].disqualified);
+                            }
+                        }
+                        ssort('ul#smartboard');
+
+                    },
+                });
+
+
                 // play it again, sam
-                var t=setTimeout("poll()",7500);
+                var t=setTimeout("poll()",5000);
+                var width = $(window).width() - 25; $("#scoreboard").width(width);
             }
 
 
 
    
 
-function sort(listname, ranks)
+        function sort(listname)
         {
             var $Ul = $(listname);
             $Ul.css({position:'relative',height:$Ul.height(),display:'block'});
@@ -126,9 +191,34 @@ function sort(listname, ranks)
                                                       var $El = $(el); 
                                                       var iFr = $.data(el,'h'); iFr = Number(iFr.toFixed(0)); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function(){/*if(iFr>iTo){alert("i:" + i +", iLnH:"+ iLnH+", iFr:"+iFr+", iTo:"+iTo+", new rank:" + ranks[iFr/20] + ", old rank:" + ranks[i]);}*/ el.style.color="black"; el.style.fontWeight = 'normal'; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) el.style.backgroundColor='#ddd';}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.fontWeight = 'bold'; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
-                                                     });
-}
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='#ddd';} if (el.children[PREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[DISQ].innerHTML === "true") { el.style.backgroundColor='pink'; el.style.color="white";}}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+            });  
+        }
+
+
+
+        function ssort(listname)
+        {
+            var $Ul = $(listname);
+            $Ul.css({position:'relative',height:$Ul.height(),display:'block'});
+            var iLnH;
+            var $Li = $(listname+'>li');
+            $Li.each(function(i,el){
+                     var iY = $(el).position().top; 
+                     $.data(el,'h',iY);
+                     if (i===1) iLnH = iY;
+                     }); 
+
+
+            tinysort(listname+'>li').forEach(function(el, i){
+                                                      var $El = $(el); 
+                                                      var iFr = $.data(el,'h'); iFr = Number(iFr.toFixed(0)); 
+                                                      var iTo = i*iLnH;
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='#ddd';} if (el.children[SPREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[SDISQ].innerHTML === "true") { el.style.backgroundColor='pink'; el.style.color="white";}}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+            });  
+        }
+
+
 
         </script>
 
