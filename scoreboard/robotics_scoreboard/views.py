@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from robotics_scoreboard.models import FastRatsTableEntry, Team, Score
+from robotics_scoreboard.models import Team, Score
 from django.db import connection
 
 # Create your views here.
@@ -21,14 +21,14 @@ def scoreboard(request):
 def getFastRatsJson(request):
 	#Get all of the records from the database
 	# add cast the collection into a list
-	fastRats = list(FastRatsTableEntry.objects.all().values())
+	fastRats = list(createFastRatsDict())
 	#context_dict = {'fastRats': fastRats }
 	return JsonResponse(data=fastRats, safe=False)
 
 def getSmartRatsJson(request):
 	#Get all of the records from the database
 	# add cast the collection into a list
-	smartRats = list(FastRatsTableEntry.objects.filter(rat_type='S').values())
+	smartRats = list(createSmartRatsDict())
 	#context_dict = {'fastRats': fastRats }
 	return JsonResponse(data=smartRats, safe=False)
 
@@ -37,6 +37,81 @@ def getTeamData(request):
 	return JsonResponse(data=teamData, safe=False)
 
 #helper methods
+def createSmartRatsDict( ):
+    #create cursor that will perform the query
+    cursor = connection.cursor()
+    
+    #define the raw sql query that will create the composite entry data
+    # that will be serialized as JSON for the view
+    query = ('SELECT '
+    't.Team AS team,'
+    't.TeamNumber AS team_number,'
+    't.Type AS rat_type,'
+    't.TotalScore AS total_score, '
+    't.InFinal AS in_final,'
+    't.Disqualified AS disqualified, '
+    's.SearchPath AS search_path,'
+    's.SearchTime AS search_time,'
+    's.CriticalPath AS critical_path,'
+    's.CriticalTime AS critical_time,'
+    's.EasterEgg AS easter_egg,'
+    's.Penalty AS penalty,'
+    's.RoundScore AS round_score,' 
+    's.id '
+    'FROM robotics_scoreboard_score AS s '
+    'JOIN robotics_scoreboard_team AS t '
+    'ON t.id=s.team_id '
+    'WHERE rat_type = "S"'
+    )
+    #execute query to populate the cursor's description collection
+    cursor.execute(query)
+
+    #get a tuple of the field/column names
+    desc = cursor.description
+    #print(desc)
+
+    #construct and return a dictionary with the alias names as the keys and the field values
+    return [dict(zip([col[0] for col in desc ], row ))
+    for row in cursor.fetchall()
+    ]
+
+def createFastRatsDict( ):
+    #create cursor that will perform the query
+    cursor = connection.cursor()
+    
+    #define the raw sql query that will create the composite entry data
+    # that will be serialized as JSON for the view
+    query = ('SELECT '
+    't.Team AS team,'
+    't.TeamNumber AS team_number,'
+    't.Type AS rat_type,'
+    't.TotalScore AS total_score, '
+    't.InFinal AS in_final,'
+    't.Disqualified AS disqualified, '
+    's.SearchPath AS search_path,'
+    's.SearchTime AS search_time,'
+    's.CriticalPath AS critical_path,'
+    's.CriticalTime AS critical_time,'
+    's.EasterEgg AS easter_egg,'
+    's.Penalty AS penalty,'
+    's.RoundScore AS round_score,' 
+    's.id '
+    'FROM robotics_scoreboard_score AS s '
+    'JOIN robotics_scoreboard_team AS t '
+    'ON t.id=s.team_id '
+    'WHERE rat_type = "F"'
+    )
+    #execute query to populate the cursor's description collection
+    cursor.execute(query)
+
+    #get a tuple of the field/column names
+    desc = cursor.description
+    #print(desc)
+
+    #construct and return a dictionary with the alias names as the keys and the field values
+    return [dict(zip([col[0] for col in desc ], row ))
+    for row in cursor.fetchall()
+    ]
 
 def createTeamScoreDict( ):
     #create cursor that will perform the query
@@ -45,23 +120,23 @@ def createTeamScoreDict( ):
     #define the raw sql query that will create the composite entry data
     # that will be serialized as JSON for the view
     query = ('SELECT '
-    'robotics_scoreboard_team.Team AS team,'
-    'robotics_scoreboard_team.TeamNumber AS team_number,'
-    'robotics_scoreboard_team.Type AS rat_type,'
-    'robotics_scoreboard_team.TotalScore AS total_score, '
-    'robotics_scoreboard_team.InFinal AS in_final,'
-    'robotics_scoreboard_team.Disqualified AS disqualified, '
-    'robotics_scoreboard_score.SearchPath AS search_path,'
-    'robotics_scoreboard_score.SearchTime AS search_time,'
-    'robotics_scoreboard_score.CriticalPath AS critical_path,'
-    'robotics_scoreboard_score.CriticalTime AS critical_time,'
-    'robotics_scoreboard_score.EasterEgg AS easter_egg,'
-    'robotics_scoreboard_score.Penalty AS penalty,'
-    'robotics_scoreboard_score.RoundScore AS round_score,' 
-    'robotics_scoreboard_score.id '
-    'FROM robotics_scoreboard_score '
-    'JOIN robotics_scoreboard_team '
-    'ON robotics_scoreboard_team.id=robotics_scoreboard_score.team_id'
+    't.Team AS team,'
+    't.TeamNumber AS team_number,'
+    't.Type AS rat_type,'
+    't.TotalScore AS total_score, '
+    't.InFinal AS in_final,'
+    't.Disqualified AS disqualified, '
+    's.SearchPath AS search_path,'
+    's.SearchTime AS search_time,'
+    's.CriticalPath AS critical_path,'
+    's.CriticalTime AS critical_time,'
+    's.EasterEgg AS easter_egg,'
+    's.Penalty AS penalty,'
+    's.RoundScore AS round_score,' 
+    's.id '
+    'FROM robotics_scoreboard_score AS s '
+    'JOIN robotics_scoreboard_team AS t '
+    'ON t.id=s.team_id'
     )
     #execute query to populate the cursor's description collection
     cursor.execute(query)

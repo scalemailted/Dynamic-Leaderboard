@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import timedelta
+from django.db.models import Sum
 
 # Create your models here.
 class Category(models.Model):
@@ -23,7 +24,7 @@ class Team(models.Model):
 	('S', 'Smart Rat')
 	]
 	team_name = models.CharField(max_length=10, unique=True, db_column='Team')
-	team_number = models.IntegerField(default=0, unique=True, db_column='TeamNumber')
+	team_number = models.IntegerField(default=0, db_column='TeamNumber')
 	rat_type = models.CharField(max_length=12, db_column='Type', choices=RAT_TYPE_CHOICES, default='F')
 	in_final = models.BooleanField(default=False, db_column='InFinal')
 	disqualified = models.BooleanField(default=False, db_column='Disqualified')
@@ -31,6 +32,14 @@ class Team(models.Model):
 
 	def __unicode__(self):
 		return self.team_name
+
+	def save(self):
+		self.updateTotalScore()
+		super(Team, self).save()
+
+	def updateTotalScore(self):
+		self.total_score = self.Scores.aggregate(Sum('round_score'))['round_score__sum']
+
 
 class Score(models.Model):
 	ROUND_OPTIONS = [
@@ -52,8 +61,25 @@ class Score(models.Model):
 
 	def __unicode__(self):
 		return '{} - Round {}'.format(Team.objects.get(pk=self.team_id).team_name, self.round)
-	
 
+	def save(self, *args, **kwargs):
+		self.updateRoundScore()
+		self.updateTeamTotal()
+		super(Score, self).save(*args, **kwargs)
+
+	def delete(self):
+		#self.team.total_score = self.team.total_score - self.round_score
+		super(Score, self).delete()
+		self.team.save()
+	
+	def updateTeamTotal(self):
+		self.team.total_score = self.team.Scores.aggregate(Sum('round_score'))['round_score__sum']
+		self.team.save()
+
+	def updateRoundScore(self):
+		self.round_score = self.search_path + self.critical_path + self.penalty
+		if(self.team.rat_type is 'S'):
+			self.round_score = self.round_score + self.easter_egg
 
 
 class FastRatsTableEntry(models.Model):
