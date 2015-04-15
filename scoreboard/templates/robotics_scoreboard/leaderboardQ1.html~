@@ -114,8 +114,8 @@
 
                 //SMART RATS
                 $.ajax ({
-                    url: '/robotics_scoreboard/smartRatsRound1',
-                    //url: '/robotics_scoreboard/fastRatsRound1',
+                    //url: '/robotics_scoreboard/smartRatsRound1',
+                    url: '/robotics_scoreboard/fastRatsRound1',
                     dataType: 'json',
                     success: function(o) {
 

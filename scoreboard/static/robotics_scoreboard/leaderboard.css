@@ -30,6 +30,19 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
+
+#round
+{   
+    width: 100%;
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 20pt;
+    border-bottom: 10px solid white;
+    background-color: #777;
+    color: #fff;
+
+}
+
 .right-title
 {
     padding-top: 5px;
@@ -91,6 +104,16 @@ footer, header, hgroup, menu, nav, section {
 
 .table-row:nth-child(even){
     background:#ddd;
+}
+
+.smart-table-row 
+{
+    display: table-row;
+}
+
+
+.smart-table-row:nth-child(even){
+    background: LightPink;
 }
 
 .rank, .team, .search_path, .search_time, .critical_path, .critical_time, .penalty, .total_score, .easter_egg, .round_score 
