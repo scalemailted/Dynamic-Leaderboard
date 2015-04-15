@@ -33,10 +33,6 @@ class Team(models.Model):
 	def __unicode__(self):
 		return self.team_name
 
-	def save(self):
-		self.updateTotalScore()
-		super(Team, self).save()
-
 	def updateTotalScore(self):
 		self.total_score = self.Scores.aggregate(Sum('round_score'))['round_score__sum']
 
@@ -64,13 +60,12 @@ class Score(models.Model):
 
 	def save(self, *args, **kwargs):
 		self.updateRoundScore()
-		self.updateTeamTotal()
 		super(Score, self).save(*args, **kwargs)
+		self.updateTeamTotal()
 
 	def delete(self):
-		#self.team.total_score = self.team.total_score - self.round_score
 		super(Score, self).delete()
-		self.team.save()
+		self.updateTeamTotal()
 	
 	def updateTeamTotal(self):
 		self.team.total_score = self.team.Scores.aggregate(Sum('round_score'))['round_score__sum']
