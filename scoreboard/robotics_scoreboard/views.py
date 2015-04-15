@@ -45,7 +45,6 @@ def round3(request):
     return render( request, 'robotics_scoreboard/leaderboardQ3.html')
 
 def final(request):
-
     #Construct a dictionary to pass to the template engine as its context.
     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
     #context_dict = {'boldmessage' : "This is text defined in the view method."}
@@ -57,29 +56,64 @@ def final(request):
     #return render(request, 'robotics_scoreboard/index.html', context_dict)
     return render( request, 'robotics_scoreboard/leaderboardF.html')
 
-def getFastRatsJson(request):
+def fastRatsRound1(request):
 	#Get all of the records from the database
-	# add cast the collection into a list
-	fastRats = list(createFastRatsDict())
-	#context_dict = {'fastRats': fastRats }
-	return JsonResponse(data=fastRats, safe=False)
+    # add cast the collection into a list
+    round_number = 1
+    fastRats = list(createFastRatsDict(round_number))
+	#context_dict = {'fastRats': fastRats }    
+    return JsonResponse(data=fastRats, safe=False)
 
-def getSmartRatsJson(request):
+def fastRatsRound2(request):
+    #Get all of the records from the database
+    # add cast the collection into a list
+    round_number = 2
+    fastRats = list(createFastRatsDict(round_number))
+    #context_dict = {'fastRats': fastRats }
+    return JsonResponse(data=fastRats, safe=False)
+
+def fastRatsRound3(request):
+    #Get all of the records from the database
+    # add cast the collection into a list
+    round_number = 3
+    fastRats = list(createFastRatsDict(round_number))
+    #context_dict = {'fastRats': fastRats }
+    return JsonResponse(data=fastRats, safe=False)
+
+def smartRatsRound1(request):
 	#Get all of the records from the database
 	# add cast the collection into a list
-	smartRats = list(createSmartRatsDict())
+    round_number = 1
+    smartRats = list(createSmartRatsDict(round_number))
 	#context_dict = {'fastRats': fastRats }
-	return JsonResponse(data=smartRats, safe=False)
+    return JsonResponse(data=smartRats, safe=False)
+
+def smartRatsRound2(request):
+    #Get all of the records from the database
+    # add cast the collection into a list
+    round_number = 2
+    smartRats = list(createSmartRatsDict(round_number))
+    #context_dict = {'fastRats': fastRats }
+    return JsonResponse(data=smartRats, safe=False)
+
+def smartRatsRound3(request):
+    #Get all of the records from the database
+    # add cast the collection into a list
+    round_number = 3
+    smartRats = list(createSmartRatsDict(round_number))
+    #context_dict = {'fastRats': fastRats }
+    return JsonResponse(data=smartRats, safe=False)
 
 def getTeamData(request):
 	teamData = list(createTeamScoreDict())
 	return JsonResponse(data=teamData, safe=False)
 
 #helper methods
-def createSmartRatsDict( ):
+def createSmartRatsDict( roundNum=1):
     #create cursor that will perform the query
     cursor = connection.cursor()
     
+    roundVal = str(roundNum)
     #define the raw sql query that will create the composite entry data
     # that will be serialized as JSON for the view
     query = ('SELECT '
@@ -95,13 +129,17 @@ def createSmartRatsDict( ):
     's.CriticalTime AS critical_time,'
     's.EasterEgg AS easter_egg,'
     's.Penalty AS penalty,'
+    's.Round AS round_number,'
     's.RoundScore AS round_score,' 
     's.id '
     'FROM robotics_scoreboard_score AS s '
     'JOIN robotics_scoreboard_team AS t '
     'ON t.id=s.team_id '
-    'WHERE rat_type = "S"'
+    'WHERE rat_type = "S" '
+    'AND round_number = ' + roundVal
     )
+
+
     #execute query to populate the cursor's description collection
     cursor.execute(query)
 
@@ -114,9 +152,11 @@ def createSmartRatsDict( ):
     for row in cursor.fetchall()
     ]
 
-def createFastRatsDict( ):
+def createFastRatsDict( roundNum=1):
     #create cursor that will perform the query
     cursor = connection.cursor()
+
+    roundVal = str(roundNum)
     
     #define the raw sql query that will create the composite entry data
     # that will be serialized as JSON for the view
@@ -134,14 +174,18 @@ def createFastRatsDict( ):
     's.EasterEgg AS easter_egg,'
     's.Penalty AS penalty,'
     's.RoundScore AS round_score,' 
+    's.Round AS round_number,'
     's.id '
     'FROM robotics_scoreboard_score AS s '
     'JOIN robotics_scoreboard_team AS t '
     'ON t.id=s.team_id '
     'WHERE rat_type = "F"'
+    #'AND round_number = '
     )
+
+    query = query + ' AND round_number = ' + roundVal
     #execute query to populate the cursor's description collection
-    cursor.execute(query)
+    cursor.execute(query )
 
     #get a tuple of the field/column names
     desc = cursor.description
@@ -175,7 +219,7 @@ def createTeamScoreDict( ):
     's.id '
     'FROM robotics_scoreboard_score AS s '
     'JOIN robotics_scoreboard_team AS t '
-    'ON t.id=s.team_id'
+    'ON t.id=s.team_id AND in_final=1'
     )
     #execute query to populate the cursor's description collection
     cursor.execute(query)
