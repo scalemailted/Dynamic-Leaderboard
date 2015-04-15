@@ -40,8 +40,15 @@ footer, header, hgroup, menu, nav, section {
     border-bottom: 10px solid white;
     background-color: #777;
     color: #fff;
-
 }
+
+#round a
+{   
+    text-decoration: none;
+    color: #fff;
+}
+
+
 
 .right-title
 {
