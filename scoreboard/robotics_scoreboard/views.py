@@ -215,11 +215,12 @@ def createTeamScoreDict( ):
     's.CriticalTime AS critical_time,'
     's.EasterEgg AS easter_egg,'
     's.Penalty AS penalty,'
+    's.Round AS round_number'
     's.RoundScore AS round_score,' 
     's.id '
     'FROM robotics_scoreboard_score AS s '
     'JOIN robotics_scoreboard_team AS t '
-    'ON t.id=s.team_id AND in_final=1'
+    'ON t.id=s.team_id AND round_number="F"'
     )
     #execute query to populate the cursor's description collection
     cursor.execute(query)
