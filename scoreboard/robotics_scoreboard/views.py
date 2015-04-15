@@ -215,7 +215,7 @@ def createTeamScoreDict( ):
     's.CriticalTime AS critical_time,'
     's.EasterEgg AS easter_egg,'
     's.Penalty AS penalty,'
-    's.Round AS round_number'
+    's.Round AS round_number, '
     's.RoundScore AS round_score,' 
     's.id '
     'FROM robotics_scoreboard_score AS s '
