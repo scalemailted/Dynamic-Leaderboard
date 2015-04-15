@@ -193,7 +193,7 @@
                                                       var $El = $(el); 
                                                       var iFr = $.data(el,'h'); iFr = Number(iFr.toFixed(0)); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='#ddd';} if (el.children[PREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[DISQ].innerHTML === "true") {  /*el.style.color='white'; el.style.backgroundColor = '#999';*/el.style.color='DarkRed'; el.style.backgroundColor = 'black';}}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='#ddd';} if (el.children[PREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[DISQ].innerHTML === "true") {  /*el.style.color='white'; el.style.backgroundColor = '#999';*/el.style.color='Red'; el.style.backgroundColor = 'black';}}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
             });  
         }
 
@@ -216,7 +216,7 @@
                                                       var $El = $(el); 
                                                       var iFr = $.data(el,'h'); iFr = Number(iFr.toFixed(0)); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='LightPink';} if (el.children[SPREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[SDISQ].innerHTML === "true") {  el.style.color='DarkRed'; el.style.backgroundColor = 'black';}}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='LightPink';} if (el.children[SPREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[SDISQ].innerHTML === "true") {  el.style.color='Red'; el.style.backgroundColor = 'black';}}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
             });  
         }
 
