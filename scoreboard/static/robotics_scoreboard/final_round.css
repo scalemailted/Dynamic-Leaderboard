@@ -1,0 +1,206 @@
+@CHARSET "UTF-8";
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  /*margin: 0;*/
+  padding: 0;
+  /*border: 0;*/
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+
+#round
+{   
+    width: 100%;
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 20pt;
+    border-bottom: 10px solid white;
+    background-color: #777;
+    color: #fff;
+}
+
+#round a
+{   
+    text-decoration: none;
+    color: #fff;
+}
+
+
+
+.right-title
+{
+    padding-top: 5px;
+    font-weight: bold;
+    /*display: table-cell;*/
+    text-align: center;
+    border-style: solid;
+    border-left-width: 1px; 
+    border-right-width: 1px; 
+    border-top: 0;
+    border-bottom-width: 1px;
+    border-color: #fff;
+    width: 100%; !important
+
+}
+
+
+.left-title
+{
+    padding-top: 5px;
+    font-weight: bold;
+    /*display: table-cell;*/
+    text-align: center;
+    border-style: solid;
+    border-left-width: 1px; 
+    border-right-width: 1px; 
+    border-top: 0;
+    border-bottom-width: 1px;
+    border-color: #fff;
+    width: 100%;
+
+}
+
+#scoreboard
+{
+    text-align: center;
+}
+
+#leftcolumn 
+{
+    display: inline-block;
+    /*float: left;*/
+
+}
+
+#rightcolumn 
+{
+    display: inline-block;
+    /*float: right;*/
+
+}
+
+
+.table-row 
+{
+    display: table-row;
+}
+
+
+.table-row:nth-child(even){
+    background:#ddd;
+}
+
+.smart-table-row 
+{
+    display: table-row;
+}
+
+
+.smart-table-row:nth-child(even){
+    background: LightPink;
+}
+
+.rank, .team, .search_path, .search_time, .critical_path, .critical_time, .penalty, .total_score, .easter_egg, .round_score 
+{
+    padding-top: 5px;
+    display: table-cell;
+    text-align: center;
+    border-style: solid;
+    border-left-width: 1px; 
+    border-right-width: 1px; 
+    border-top: 0;
+    border-bottom: 0;
+    border-color: #fff;
+    font-weight: bold;
+    /*width: 50px;*/
+}
+
+.prequalified, .disqualified
+{
+    display: none;
+}
+
+
+
+#total_column
+{
+    /*text-align: right;*/
+    /*padding-right: .75cm;*/    
+}
+
+#left-header
+{
+    line-height: 1.25;
+    color: #fff;
+    background-color: #036; 
+    /*border-style: solid;
+    border-bottom-color: #fff;*/
+}
+
+#right-header
+{
+    line-height: 1.25;
+    color: #fff;
+    background-color: #900; 
+    /*border-style: solid;
+    border-bottom-color: #fff;*/
+}
+
+
+
+span {
+    display: inline-block;
+    min-width: 75px;
+}
+
+
+body {
+  line-height: 1;
+  font-family: Helvetica, arial, sans-serif;
+  /*margin:10pt;*/
+}
+
+
+ol, ul {  
+  list-style: none;
+  /*list-style-position: inside;*/
+}
+
+
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+h1 { font-size: 200% }
