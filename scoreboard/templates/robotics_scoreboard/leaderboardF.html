@@ -20,13 +20,13 @@
                 <div class="table-row">
             	    <span id="left-header" class="rank">Rank</span>
             	    <span id="left-header" class="team">Team</span>
-                    <span id="left-header" class="critical_time">Adj. Crit Time</span>
-                    <span id="left-header" class="total_score">Bonus Time</span>
+                    <span id="left-header" class="adj_crit_time">Adj. Crit Time</span>
+                    <span id="left-header" class="bonus_time">Bonus Time</span>
                     <span id="left-header" class="critical_time">Critical Time</span>
                     <span id="left-header" class="critical_path">Critical Path</span>
                     <span id="left-header" class="search_time">Search Time</span>
                     <span id="left-header" class="search_path">Search Path</span>
-                    <span id="left-header" class="round_score">Final Round</span>
+                    <span id="left-header" class="final_round">Final Round</span>
                     <span id="left-header" class="total_score">Running Total</span>
                 </div> 
                 <ul id="finalboard"></ul>
@@ -57,40 +57,25 @@
                             if ($('#bestRat-'+o[i].id).length == 0)
                             {
                                 // this id doesn't exist, so add it to our list.
-                                if (o[i].rat_type === 'F')
-                                {
+                                var row_type;
+                                if (o[i].rat_type === "F") row_type = "fast-table-row"; else row_type = "smart-table-row";
+                                
+                           
                                 $("#finalboard").append(
-                                                         '<li class="fast-table-row" id= "bestRat-' + o[i].id + '">'+
+                                                         //'<li class="table-row" id= "fastRat-' + o[i].id + '">'+
+                                                         '<li class="table-row '+row_type+'" id= "bestRat-' + o[i].id + '">'+
                                                             '<span class="rank">' + ranks[i] + '</span>'+
                                                             '<span class="team">' + o[i].team + '</span>'+
-                                                            //'<span id="total_column" class="total_score">' + o[i].total_score + '</span>'+
-                                                            //'<span id="round_column" class="round_score">' + o[i].round_score + '</span>'+
-                                                            //'<span class="critical_path">' + o[i].critical_path+ '</span>'+
-                                                            //'<span class="critical_time">' + o[i].critical_time + '</span>'+
-                                                            //'<span class="search_path">'+ o[i].search_path + '</span>'+
-                                                            //'<span class="search_time">'+ o[i].search_time + '</span>'+
-                                                            //'<span class="penalty">' + o[i].penalty + '</span>'+
-                                                            //'<span class="prequalified">' + o[i].in_final + '</span>'+
-                                                            //'<span class="disqualified">' + o[i].disqualified + '</span>'+
+                                                            '<span class="adj_crit_time">' + "ToDo" + '</span>'+
+                                                            '<span class="bonus_time">' + o[i].btb_percentage + '</span>'+
+                                                            '<span class="critical_time">' + o[i].critical_time + '</span>'+
+                                                            '<span class="critical_path">' + o[i].critical_path + '</span>'+
+                                                            '<span class="search_time">'+ o[i].search_time + '</span>'+
+                                                            '<span class="search_path">'+ o[i].search_path + '</span>'+
+                                                            '<span class="final_round">' + o[i].round_score + '</span>'+
+                                                            '<span class="total_score">' + o[i].total_score + '</span>'+
+                                                            '<span class="disqualified">' + o[i].disqualified + '</span>'+
                                                          '</li>');
-                                }
-                                else
-                                {
-                                $("#finalboard").append(
-                                                         '<li class="smart-table-row" id= "bestRat-' + o[i].id + '">'+
-                                                            '<span class="rank">' + ranks[i] + '</span>'+
-                                                            '<span class="team">' + o[i].team + '</span>'+
-                                                            //'<span id="total_column" class="total_score">' + o[i].total_score + '</span>'+
-                                                            //'<span id="round_column" class="round_score">' + o[i].round_score + '</span>'+
-                                                            //'<span class="critical_path">' + o[i].critical_path+ '</span>'+
-                                                            //'<span class="critical_time">' + o[i].critical_time + '</span>'+
-                                                            //'<span class="search_path">'+ o[i].search_path + '</span>'+
-                                                            //'<span class="search_time">'+ o[i].search_time + '</span>'+
-                                                            //'<span class="penalty">' + o[i].penalty + '</span>'+
-                                                            //'<span class="prequalified">' + o[i].in_final + '</span>'+
-                                                            //'<span class="disqualified">' + o[i].disqualified + '</span>'+
-                                                         '</li>');
-                                }
                             }
                             else
                             {
@@ -107,7 +92,7 @@
                                 $('#bestRat-'+o[i].id).find(".disqualified").html(o[i].disqualified);
                             }
                         }
-                        //sort('ul#finalboard');
+                        sort('ul#finalboard');
 
                     },
                 });
@@ -136,7 +121,7 @@
                                                       var $El = $(el); 
                                                       var iFr = $.data(el,'h'); iFr = Number(iFr.toFixed(0)); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='#ddd';} if (el.children[PREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[DISQ].innerHTML === "true") { el.style.backgroundColor='pink'; el.style.color="white";}}, progress:function(){if (iFr > iTo) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {/*el.style.color="black";*/ el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='Khaki';} if (el.children[DISQ].innerHTML === "true") { el.style.backgroundColor='black'; el.style.color="red";}}, progress:function(){if (iFr > iTo) {/*el.style.color="white";*/ el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
             });  
         }
 

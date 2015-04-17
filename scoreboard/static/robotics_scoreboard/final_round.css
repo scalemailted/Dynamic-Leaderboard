@@ -81,30 +81,40 @@ footer, header, hgroup, menu, nav, section {
 
 
 
-.fast-table-row 
+.table-row 
 {
     display: table-row;
-    background:#ddd;
 }
 
-/*
-.table-row:nth-child(even){
-    background:#ddd;
-}
-*/
+
 .smart-table-row 
 {
     display: table-row;
-    background: LightPink;
+    color: Red;
+}
+
+.fast-table-row 
+{
+    display: table-row;
+    color: Blue;
+}
+
+
+.table-row:nth-child(even){
+    background: Khaki;
+}
+
+.smart-table-row 
+{
+    display: table-row;
 }
 
 /*
 .smart-table-row:nth-child(even){
     background: LightPink;
-}
-*/
+}*/
 
-.rank, .team, .search_path, .search_time, .critical_path, .critical_time, .penalty, .total_score, .easter_egg, .round_score 
+.rank, .team, .adj_crit_time, .bonus_time, .critical_time, .critical_path, .search_time, .search_path, .final_round, .total_score
 {
     padding-top: 5px;
     display: table-cell;
@@ -116,8 +126,6 @@ footer, header, hgroup, menu, nav, section {
     border-bottom: 0;
     border-color: #fff;
     font-weight: bold;
-    border-top: 5px solid white;
-    border-bottom: 5px solid white;
     /*width: 50px;*/
 }
 
