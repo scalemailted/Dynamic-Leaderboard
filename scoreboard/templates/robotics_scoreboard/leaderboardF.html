@@ -48,13 +48,13 @@
                     success: function(o) {
 
 
-                        var fastest_crit = 99;
+                        var fastest_crit = Number.MAX_SAFE_INTEGER;
                         for(i=0; i<o.length;i++)
                         {
                             if (o[i].critical_time > 0 && o[i].critical_time < fastest_crit) 
                                 fastest_crit=o[i].critical_time; 
                         }
-                        if (fastest_crit === 99) fastest_crit = 0; 
+                        if (fastest_crit === Number.MAX_SAFE_INTEGER) fastest_crit = 0; 
                         //var scores = [];
                         //for (i = 0; i < o.length; i++) {scores.push(o[i].total_score);}
                         //var sorted = scores.slice().sort(function(a,b){return b-a});
@@ -63,7 +63,7 @@
 
                         for(i=0;i<o.length;i++)
                         {
-                            var adjCrit = calc_adj_crit(o[i].critical_time, fastest_crit, o[i].btb_percentage)
+                            var adjCrit = calc_adj_crit(o[i].critical_time, fastest_crit, o[i].btb_percentage);
 
                             if ($('#bestRat-'+o[i].id).length == 0)
                             {
@@ -129,18 +129,19 @@
 
             tinysort(listname+'>li').forEach(function(el, i){
                                                       var $El = $(el); 
-                                                      var iFr = $.data(el,'h'); iFr = Number(iFr.toFixed(0)); 
+                                                      var iFr = $.data(el,'h'); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {/*el.style.color="black";*/ el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='Khaki';} if (el.children[DISQ].innerHTML === "true") { el.style.backgroundColor='black'; el.style.color="red";}}, progress:function(){if (iFr > iTo) {/*el.style.color="white";*/ el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {/*el.style.color="black";*/ el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='Khaki';} if (el.children[DISQ].innerHTML === "true") { el.style.backgroundColor='black'; el.style.color="red";}}, progress:function(){if (iFr - iTo >= iLnH) {/*el.style.color="white";*/ el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
             });  
         }
 
         function calc_adj_crit(this_crit, fastest_crit, btb_percentage)
         {
         //formula:
-            if (this_crit > fastest_crit*(btb_percentage/100)) 
+            if (this_crit > fastest_crit*(btb_percentage/100.0)) 
             {
-                var adj_crit = this_crit - fastest_crit*(btb_percentage/100);
+                var adj_crit = this_crit - (fastest_crit*(btb_percentage/100));
+                
                 return adj_crit.toFixed(1);
             } 
             else 
@@ -175,9 +176,16 @@
             var rnd_scores_sorted = rnd_scores.slice().sort(function(a,b){return b-a});
             var rnd_scores_ranks = rnd_scores.slice().map(function(v){ return rnd_scores_sorted.indexOf(v)+1 });
 
+            //get ranks for total scores
+            var tot_scores = [];
+            for (i = 0; i < o.length; i++) {tot_scores.push(o[i].total_score);}
+            var tot_scores_sorted = tot_scores.slice().sort(function(a,b){return b-a});
+            var tot_scores_ranks = tot_scores.slice().map(function(v){ return tot_scores_sorted.indexOf(v)+1 });
+
+
             //concat scores into string and sort for final ranks
             var combined_ranks = [];
-            for (i = 0; i < o.length; i++) {combined_ranks.push( "" + adj_ctimes_ranks[i] + crit_scores_ranks[i] + adj_stimes_ranks[i] + rnd_scores_ranks[i] );}
+            for (i = 0; i < o.length; i++) {combined_ranks.push( "" + adj_ctimes_ranks[i] + crit_scores_ranks[i] + adj_stimes_ranks[i] + rnd_scores_ranks[i] + tot_scores_ranks[i] );}
             var combined_ranks_sorted = combined_ranks.slice().sort(function(a,b){return a-b});
             var final_ranks = combined_ranks.slice().map(function(v){ return combined_ranks_sorted.indexOf(v)+1 });
 
