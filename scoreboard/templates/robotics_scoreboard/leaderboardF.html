@@ -138,7 +138,7 @@
         function calc_adj_crit(this_crit, fastest_crit, btb_percentage)
         {
         //formula:
-            if (this_crit > 0) 
+            if (this_crit > fastest_crit*(btb_percentage/100)) 
             {
                 var adj_crit = this_crit - fastest_crit*(btb_percentage/100);
                 return adj_crit.toFixed(1);
@@ -188,7 +188,7 @@
         function calc_adj_srch(this_search, fastest_crit, btb_percentage)
         {
         //formula:
-            if (this_search > fastest_crit*(btb_percentage/100) 
+            if (this_search > fastest_crit*(btb_percentage/100)) 
             {
                 var adj_srch = this_search - fastest_crit*(btb_percentage/100);
                 return adj_srch.toFixed(1);
