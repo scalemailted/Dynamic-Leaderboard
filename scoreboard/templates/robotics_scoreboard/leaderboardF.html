@@ -21,12 +21,12 @@
             	    <span id="left-header" class="rank">Rank</span>
             	    <span id="left-header" class="team">Team</span>
                     <span id="left-header" class="adj_crit_time">Adj. Crit Time</span>
-                    <span id="left-header" class="bonus_time">Bonus Time</span>
+                    <span id="left-header" class="bonus_time">Time Multiplier</span>
                     <span id="left-header" class="critical_time">Critical Time</span>
                     <span id="left-header" class="critical_path">Critical Path</span>
                     <span id="left-header" class="search_time">Search Time</span>
                     <span id="left-header" class="search_path">Search Path</span>
-                    <span id="left-header" class="final_round">Final Round</span>
+                    <span id="left-header" class="round_score">Round Score</span>
                     <span id="left-header" class="total_score">Running Total</span>
                 </div> 
                 <ul id="finalboard"></ul>
@@ -47,32 +47,40 @@
                     dataType: 'json',
                     success: function(o) {
 
-                        var scores = [];
-                        for (i = 0; i < o.length; i++) {scores.push(o[i].total_score);}
-                        var sorted = scores.slice().sort(function(a,b){return b-a});
-                        var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
+
+                        var fastest_crit = 99;
+                        for(i=0; i<o.length;i++)
+                        {
+                            if (o[i].critical_time > 0 && o[i].critical_time < fastest_crit) 
+                                fastest_crit=o[i].critical_time; 
+                        }
+                        if (fastest_crit === 99) fastest_crit = 0; 
+                        //var scores = [];
+                        //for (i = 0; i < o.length; i++) {scores.push(o[i].total_score);}
+                        //var sorted = scores.slice().sort(function(a,b){return b-a});
+                        //var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
 
                         for(i=0;i<o.length;i++)
                         {
+                            var adjCrit = calc_adj_crit(o[i].critical_time, fastest_crit, o[i].btb_percentage)
+
                             if ($('#bestRat-'+o[i].id).length == 0)
                             {
                                 // this id doesn't exist, so add it to our list.
                                 var row_type;
                                 if (o[i].rat_type === "F") row_type = "fast-table-row"; else row_type = "smart-table-row";
-                                
-                           
                                 $("#finalboard").append(
                                                          //'<li class="table-row" id= "fastRat-' + o[i].id + '">'+
                                                          '<li class="table-row '+row_type+'" id= "bestRat-' + o[i].id + '">'+
-                                                            '<span class="rank">' + ranks[i] + '</span>'+
+                                                            '<span class="rank">' + /*ranks[i]*/"ToDo" + '</span>'+
                                                             '<span class="team">' + o[i].team + '</span>'+
-                                                            '<span class="adj_crit_time">' + "ToDo" + '</span>'+
-                                                            '<span class="bonus_time">' + o[i].btb_percentage + '</span>'+
+                                                            '<span class="adj_crit_time">' + adjCrit + '</span>'+
+                                                            '<span class="bonus_time">' + o[i].btb_percentage+"%" + '</span>'+
                                                             '<span class="critical_time">' + o[i].critical_time + '</span>'+
                                                             '<span class="critical_path">' + o[i].critical_path + '</span>'+
                                                             '<span class="search_time">'+ o[i].search_time + '</span>'+
                                                             '<span class="search_path">'+ o[i].search_path + '</span>'+
-                                                            '<span class="final_round">' + o[i].round_score + '</span>'+
+                                                            '<span class="round_score">' + o[i].round_score + '</span>'+
                                                             '<span class="total_score">' + o[i].total_score + '</span>'+
                                                             '<span class="disqualified">' + o[i].disqualified + '</span>'+
                                                          '</li>');
@@ -80,14 +88,15 @@
                             else
                             {
                                 // this id does exist, so update 'score' count in the h1 tag in the list item.
-                                $('#bestRat-'+o[i].id).find(".rank").html(ranks[i]); 
-                                $('#bestRat-'+o[i].id).find(".total_score").html(o[i].total_score);
-                                $('#bestRat-'+o[i].id).find(".round_score").html(o[i].round_score);
-                                $('#bestRat-'+o[i].id).find(".critial_path").html(o[i].critical_path); 
-                                $('#bestRat-'+o[i].id).find(".critical_time").html(o[i].critical_time); 
-                                $('#bestRat-'+o[i].id).find(".search_path").html(o[i].search_path);
+                                $('#bestRat-'+o[i].id).find(".rank").html(/*ranks[i]*/"ToDo"); 
+                                $('#bestRat-'+o[i].id).find(".adj_crit_time").html(adjCrit);
+                                $('#bestRat-'+o[i].id).find(".bonus_time").html(o[i].btb_percentage+"%");
+                                $('#bestRat-'+o[i].id).find(".critical_time").html(o[i].critical_time);
+                                $('#bestRat-'+o[i].id).find(".critial_path").html(o[i].critical_path);
                                 $('#bestRat-'+o[i].id).find(".search_time").html(o[i].search_time);
-                                $('#bestRat-'+o[i].id).find(".penalty").html(o[i].penalty); 
+                                $('#bestRat-'+o[i].id).find(".search_path").html(o[i].search_path);
+                                $('#bestRat-'+o[i].id).find(".round_score").html(o[i].round_score);  
+                                $('#bestRat-'+o[i].id).find(".total_score").html(o[i].total_score);
                                 $('#bestRat-'+o[i].id).find(".prequalified").html(o[i].in_final); 
                                 $('#bestRat-'+o[i].id).find(".disqualified").html(o[i].disqualified);
                             }
@@ -123,6 +132,18 @@
                                                       var iTo = i*iLnH;
                                                      $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {/*el.style.color="black";*/ el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='Khaki';} if (el.children[DISQ].innerHTML === "true") { el.style.backgroundColor='black'; el.style.color="red";}}, progress:function(){if (iFr > iTo) {/*el.style.color="white";*/ el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
             });  
+        }
+
+        function calc_adj_crit(this_crit, fastest_crit, btb_percentage)
+        {
+        //formula:
+            if (this_crit > 0) 
+            {
+                var adj_crit = this_crit - fastest_crit*(btb_percentage/100);
+                return adj_crit.toFixed(1);
+            } 
+            else 
+                return 0;
         }
 
 

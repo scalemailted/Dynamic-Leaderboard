@@ -114,7 +114,7 @@ footer, header, hgroup, menu, nav, section {
     background: LightPink;
 }*/
 
-.rank, .team, .adj_crit_time, .bonus_time, .critical_time, .critical_path, .search_time, .search_path, .final_round, .total_score
+.rank, .team, .adj_crit_time, .bonus_time, .critical_time, .critical_path, .search_time, .search_path, .round_score, .total_score
 {
     padding-top: 5px;
     display: table-cell;
