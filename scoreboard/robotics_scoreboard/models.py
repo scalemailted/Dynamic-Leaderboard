@@ -76,7 +76,7 @@ class Score(models.Model):
 		self.team.save()
 
 	def updateRoundScore(self):
-		self.round_score = self.search_path + self.critical_path + self.penalty
+		self.round_score = self.search_path + self.critical_path + self.critical_penalty + self.search_penalty
 		if(self.team.rat_type is 'S'):
 			self.round_score = self.round_score + self.easter_egg
 
@@ -99,7 +99,7 @@ class FastRatsTableEntry(models.Model):
 
 	def save(self):
 		# update total score to be the sum of search_path, critical_path, easter_egg, and penalty.
-		self.round_score = self.search_path + self.critical_path + self.penalty
+		self.round_score = self.search_path + self.critical_path 
 		if( self.rat_type is 'S'):
 			self.round_score = self.round_score + self.easter_egg
 		self.total_score = self.round_score
