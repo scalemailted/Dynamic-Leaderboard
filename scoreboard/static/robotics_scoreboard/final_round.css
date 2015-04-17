@@ -38,7 +38,7 @@ footer, header, hgroup, menu, nav, section {
     font-weight: bold;
     font-size: 20pt;
     border-bottom: 10px solid white;
-    background-color: #777;
+    background-color: GoldenRod;
     color: #fff;
 }
 
@@ -49,22 +49,6 @@ footer, header, hgroup, menu, nav, section {
 }
 
 
-
-.right-title
-{
-    padding-top: 5px;
-    font-weight: bold;
-    /*display: table-cell;*/
-    text-align: center;
-    border-style: solid;
-    border-left-width: 1px; 
-    border-right-width: 1px; 
-    border-top: 0;
-    border-bottom-width: 1px;
-    border-color: #fff;
-    width: 100%; !important
-
-}
 
 
 .left-title
@@ -95,33 +79,30 @@ footer, header, hgroup, menu, nav, section {
 
 }
 
-#rightcolumn 
-{
-    display: inline-block;
-    /*float: right;*/
-
-}
 
 
-.table-row 
+.fast-table-row 
 {
     display: table-row;
-}
-
-
-.table-row:nth-child(even){
     background:#ddd;
 }
 
+/*
+.table-row:nth-child(even){
+    background:#ddd;
+}
+*/
 .smart-table-row 
 {
     display: table-row;
+    background: LightPink;
 }
 
-
+/*
 .smart-table-row:nth-child(even){
     background: LightPink;
 }
+*/
 
 .rank, .team, .search_path, .search_time, .critical_path, .critical_time, .penalty, .total_score, .easter_egg, .round_score 
 {
@@ -135,6 +116,8 @@ footer, header, hgroup, menu, nav, section {
     border-bottom: 0;
     border-color: #fff;
     font-weight: bold;
+    border-top: 5px solid white;
+    border-bottom: 5px solid white;
     /*width: 50px;*/
 }
 
@@ -155,25 +138,16 @@ footer, header, hgroup, menu, nav, section {
 {
     line-height: 1.25;
     color: #fff;
-    background-color: #036; 
-    /*border-style: solid;
-    border-bottom-color: #fff;*/
+    background-color: #333; 
+
 }
 
-#right-header
-{
-    line-height: 1.25;
-    color: #fff;
-    background-color: #900; 
-    /*border-style: solid;
-    border-bottom-color: #fff;*/
-}
 
 
 
 span {
     display: inline-block;
-    min-width: 75px;
+    min-width: 125px;
 }
 
 
