@@ -53,7 +53,8 @@ class Score(models.Model):
 	critical_path = models.IntegerField(default=0, db_column='CriticalPath')
 	critical_time = models.DecimalField(max_digits=10, decimal_places=1,default=0.0, db_column='CriticalTime')
 	easter_egg = models.IntegerField(default=0, db_column='EasterEgg')
-	penalty = models.IntegerField(default=0, db_column='Penalty')
+	critical_penalty = models.IntegerField(default=0, db_column='CriticalPenalty')
+	search_penalty = models.IntegerField(default=0, db_column='SearchPenalty')
 	round_score = models.IntegerField(default=0, db_column='RoundScore', editable=False)
 	btb_percentage = models.IntegerField(default=0, db_column='BTB')
 	
