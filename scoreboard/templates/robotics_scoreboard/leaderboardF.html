@@ -59,6 +59,7 @@
                         //for (i = 0; i < o.length; i++) {scores.push(o[i].total_score);}
                         //var sorted = scores.slice().sort(function(a,b){return b-a});
                         //var ranks = scores.slice().map(function(v){ return sorted.indexOf(v)+1 });
+                        var ranks = calc_ranks(o, fastest_crit);
 
                         for(i=0;i<o.length;i++)
                         {
@@ -72,7 +73,7 @@
                                 $("#finalboard").append(
                                                          //'<li class="table-row" id= "fastRat-' + o[i].id + '">'+
                                                          '<li class="table-row '+row_type+'" id= "bestRat-' + o[i].id + '">'+
-                                                            '<span class="rank">' + /*ranks[i]*/"ToDo" + '</span>'+
+                                                            '<span class="rank">' + ranks[i] + '</span>'+
                                                             '<span class="team">' + o[i].team + '</span>'+
                                                             '<span class="adj_crit_time">' + adjCrit + '</span>'+
                                                             '<span class="bonus_time">' + o[i].btb_percentage+"%" + '</span>'+
@@ -88,7 +89,7 @@
                             else
                             {
                                 // this id does exist, so update 'score' count in the h1 tag in the list item.
-                                $('#bestRat-'+o[i].id).find(".rank").html(/*ranks[i]*/"ToDo"); 
+                                $('#bestRat-'+o[i].id).find(".rank").html(ranks[i]); 
                                 $('#bestRat-'+o[i].id).find(".adj_crit_time").html(adjCrit);
                                 $('#bestRat-'+o[i].id).find(".bonus_time").html(o[i].btb_percentage+"%");
                                 $('#bestRat-'+o[i].id).find(".critical_time").html(o[i].critical_time);
@@ -141,6 +142,56 @@
             {
                 var adj_crit = this_crit - fastest_crit*(btb_percentage/100);
                 return adj_crit.toFixed(1);
+            } 
+            else 
+                return 0;
+        }
+
+        function calc_ranks(o, fastest_crit)
+        {
+            //get ranks for crit time
+            var adj_ctimes = [];
+            for (i = 0; i < o.length; i++) {adj_ctimes.push(calc_adj_crit(o[i].critical_time, fastest_crit, o[i].btb_percentage) );}
+            for (i=0;i<adj_ctimes.length;i++){if (adj_ctimes[i] == 0) adj_ctimes[i] = Number.MAX_SAFE_INTEGER; }
+            var adj_ctimes_sorted = adj_ctimes.slice().sort(function(a,b){return a-b});
+            var adj_ctimes_ranks = adj_ctimes.slice().map(function(v){ return adj_ctimes_sorted.indexOf(v)+1 });
+
+            //get ranks for crit scores
+            var crit_scores = [];
+            for (i = 0; i < o.length; i++) {crit_scores.push(o[i].critical_path + o[i].easter_egg + o[i].critical_penalty);}
+            var crit_scores_sorted = crit_scores.slice().sort(function(a,b){return b-a});
+            var crit_scores_ranks = crit_scores.slice().map(function(v){ return crit_scores_sorted.indexOf(v)+1 });
+
+            //get ranks for search times
+            var adj_stimes = [];
+            for (i = 0; i < o.length; i++) {adj_stimes.push(calc_adj_srch(o[i].search_time, fastest_crit, o[i].btb_percentage) );}
+            for (i=0;i<adj_stimes.length;i++){if (adj_stimes[i] == 0) adj_stimes[i] = Number.MAX_SAFE_INTEGER; }
+            var adj_stimes_sorted = adj_stimes.slice().sort(function(a,b){return a-b});
+            var adj_stimes_ranks = adj_stimes.slice().map(function(v){ return adj_stimes_sorted.indexOf(v)+1 });
+
+            //get ranks for round scores
+            var rnd_scores = [];
+            for (i = 0; i < o.length; i++) {rnd_scores.push(o[i].round_score);}
+            var rnd_scores_sorted = rnd_scores.slice().sort(function(a,b){return b-a});
+            var rnd_scores_ranks = rnd_scores.slice().map(function(v){ return rnd_scores_sorted.indexOf(v)+1 });
+
+            //concat scores into string and sort for final ranks
+            var combined_ranks = [];
+            for (i = 0; i < o.length; i++) {combined_ranks.push( "" + adj_ctimes_ranks[i] + crit_scores_ranks[i] + adj_stimes_ranks[i] + rnd_scores_ranks[i] );}
+            var combined_ranks_sorted = combined_ranks.slice().sort(function(a,b){return a-b});
+            var final_ranks = combined_ranks.slice().map(function(v){ return combined_ranks_sorted.indexOf(v)+1 });
+
+            return final_ranks;
+
+        } 
+
+        function calc_adj_srch(this_search, fastest_crit, btb_percentage)
+        {
+        //formula:
+            if (this_search > fastest_crit*(btb_percentage/100) 
+            {
+                var adj_srch = this_search - fastest_crit*(btb_percentage/100);
+                return adj_srch.toFixed(1);
             } 
             else 
                 return 0;
