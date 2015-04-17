@@ -29,6 +29,7 @@ class Team(models.Model):
 	in_final = models.BooleanField(default=False, db_column='InFinal')
 	disqualified = models.BooleanField(default=False, db_column='Disqualified')
 	total_score = models.IntegerField(default=0, db_column='TotalScore')
+	perfect_score_payout = models.BooleanField(default=False, db_column='PerfectScorePayout')
 
 	def __unicode__(self):
 		return self.team_name
@@ -54,6 +55,8 @@ class Score(models.Model):
 	easter_egg = models.IntegerField(default=0, db_column='EasterEgg')
 	penalty = models.IntegerField(default=0, db_column='Penalty')
 	round_score = models.IntegerField(default=0, db_column='RoundScore', editable=False)
+	btb_percentage = models.IntegerField(default=0, db_column='BTB')
+	
 
 	def __unicode__(self):
 		return '{} - Round {}'.format(Team.objects.get(pk=self.team_id).team_name, self.round)
