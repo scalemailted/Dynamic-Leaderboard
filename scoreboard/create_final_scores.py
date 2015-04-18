@@ -17,3 +17,4 @@ for team in teams:
 		    team.Scores.create(
 		        round = 'F'
 		    )
+		    print("creating score for {}".format(team.team_name))

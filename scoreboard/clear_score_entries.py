@@ -6,31 +6,24 @@ django.setup()
 
 from robotics_scoreboard.models import Team, Score
 
-def main():
-	#Get queryset that will return all score entries
-	scores = Score.objects.all()
+teams = Team.objects.all()
 
-	print ("Clearing {} scores".format(scores.count()))
-		
-	for score in scores:
-		zeroOutScore(score)
+print ("Clearing {} Team entries".format(teams.count()))
 
-	teams = Team.objects.all()
+for team in teams:
+	team.in_final=False
+	team.disqualified=False
+	team.total_score=0
+	team.perfect_score_payout=False
+	team.save()
 
-	print ("Clearing {} Team entries".format(teams.count()))
 
-	for team in teams:
-		clearTeamStatus(team)
+#Get queryset that will return all score entries
+scores = Score.objects.all()
 
-def clearTeamStatus(team):
-    team.in_final=False
-    team.disqualified=False
-    team.total_score=0
-    team.perfect_score_payout=False
-    team.save()
-    return team
+print ("Clearing {} scores".format(scores.count()))
 
-def zeroOutScore( score ):
+for score in scores:
 	score.search_path = 0
 	score.search_time = 0.00
 	score.critical_path = 0
@@ -41,7 +34,8 @@ def zeroOutScore( score ):
 	score.round_score = 0
 	score.btb_percentage = 0
 	score.save()
-	return score
 
-if __name__ == '__main__':
-	main()
+scores = Score.objects.filter(round='F')
+
+for score in scores:
+	score.delete()
