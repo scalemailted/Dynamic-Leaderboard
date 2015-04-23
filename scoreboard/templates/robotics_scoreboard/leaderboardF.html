@@ -127,7 +127,7 @@
                      }); 
 
 
-            tinysort(listname+'>li').forEach(function(el, i){
+            tinysort(listname+'>li', 'span.rank','span.team').forEach(function(el, i){
                                                       var $El = $(el); 
                                                       var iFr = $.data(el,'h'); 
                                                       var iTo = i*iLnH;
@@ -185,7 +185,7 @@
 
             //concat scores into string and sort for final ranks
             var combined_ranks = [];
-            for (i = 0; i < o.length; i++) {combined_ranks.push( "" + adj_ctimes_ranks[i] + crit_scores_ranks[i] + adj_stimes_ranks[i] + rnd_scores_ranks[i] + tot_scores_ranks[i] );}
+            for (i = 0; i < o.length; i++) {combined_ranks.push( "" + prependZero(adj_ctimes_ranks[i]) + prependZero(crit_scores_ranks[i]) + prependZero(adj_stimes_ranks[i]) + prependZero(rnd_scores_ranks[i]) + prependZero(tot_scores_ranks[i]) );}
             var combined_ranks_sorted = combined_ranks.slice().sort(function(a,b){return a-b});
             var final_ranks = combined_ranks.slice().map(function(v){ return combined_ranks_sorted.indexOf(v)+1 });
 
@@ -204,6 +204,18 @@
             else 
                 return 0;
         }
+
+        function prependZero(rank)
+       {
+           var rankString = "" + rank
+           if(rankString.length < 2 )
+           {
+               var newrank = "0" + rank;
+               return newrank
+           }
+           else 
+               return rank;
+       }
 
 
 

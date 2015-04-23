@@ -131,8 +131,9 @@ footer, header, hgroup, menu, nav, section {
     border-style: solid;
     border-left-width: 1px; 
     border-right-width: 1px; 
-    border-top: 0;
-    border-bottom: 0;
+    border-bottom-width: 1px; 
+    /*border-top: 0;
+    border-bottom: 0;*/
     border-color: #fff;
     font-weight: bold;
     /*width: 50px;*/

@@ -107,7 +107,7 @@
                                 $('#fastRat-'+o[i].id).find(".disqualified").html(o[i].disqualified);
                             }
                         }
-                        sort('ul#fastboard');
+                        sort('ul#fastboard', sorted);
 
                     },
                 });
@@ -161,7 +161,7 @@
                                 $('#smartRat-'+o[i].id).find(".disqualified").html(o[i].disqualified);
                             }
                         }
-                        ssort('ul#smartboard');
+                        ssort('ul#smartboard', sorted);
 
                     },
                 });
@@ -176,7 +176,7 @@
 
    
 
-        function sort(listname)
+        function sort(listname, sorted_scores)
         {
             var $Ul = $(listname);
             $Ul.css({position:'relative',height:$Ul.height(),display:'block'});
@@ -189,17 +189,17 @@
                      }); 
 
 
-            tinysort(listname+'>li').forEach(function(el, i){
+            tinysort(listname+'>li', 'span.rank','span.team').forEach(function(el, i){
                                                       var $El = $(el); 
                                                       var iFr = $.data(el,'h'); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='#ddd';} if (el.children[PREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[DISQ].innerHTML === "true") {  /*el.style.color='white'; el.style.backgroundColor = '#999';*/el.style.color='Red'; el.style.backgroundColor = 'black';}}, progress:function(){if (iFr - iTo >= iLnH) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='#ddd';} if (el.children[PREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[DISQ].innerHTML === "true") {  /*el.style.color='white'; el.style.backgroundColor = '#999';*/el.style.color='Red'; el.style.backgroundColor = 'black';}  var this_score = el.children[TOT].innerHTML; if (this_score >= sorted_scores[5] && el.children[PREQ].innerHTML !== "true" && this_score > 0) { el.style.backgroundColor = 'lightgreen'; }}, progress:function(){if (iFr - iTo > iLnH) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
             });  
         }
 
 
 
-        function ssort(listname)
+        function ssort(listname, sorted_scores)
         {
             var $Ul = $(listname);
             $Ul.css({position:'relative',height:$Ul.height(),display:'block'});
@@ -212,14 +212,13 @@
                      }); 
 
 
-            tinysort(listname+'>li').forEach(function(el, i){
+            tinysort(listname+'>li', 'span.rank','span.team').forEach(function(el, i){
                                                       var $El = $(el); 
                                                       var iFr = $.data(el,'h'); 
                                                       var iTo = i*iLnH;
-                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='LightPink';} if (el.children[SPREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[SDISQ].innerHTML === "true") {  el.style.color='Red'; el.style.backgroundColor = 'black';}}, progress:function(){if (iFr - iTo >= iLnH) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
+                                                     $El.css({position:'absolute',top:iFr}).animate({top:iTo}, {duration: 2500, complete:function() {el.style.color="black"; el.style.backgroundColor = 'white'; el.style.zIndex = 0; if (i%2==1) {el.style.backgroundColor='LightPink';} if (el.children[SPREQ].innerHTML === "true") el.style.backgroundColor = 'gold'; if (el.children[SDISQ].innerHTML === "true") {  el.style.color='Red'; el.style.backgroundColor = 'black';} var this_score = el.children[STOT].innerHTML; if (this_score >= sorted_scores[5] && el.children[SPREQ].innerHTML !== "true" && el.children[SDISQ].innerHTML !== "true" && this_score > 0) { el.style.backgroundColor = 'lightgreen'; }}, progress:function(){if (iFr - iTo >= iLnH) {el.style.color="white"; el.style.backgroundColor = 'green'; el.style.zIndex = 5;} }  } );
             });  
         }
-
 
 
         </script>
